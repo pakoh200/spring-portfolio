@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardMapper">
+	<select id="select" resultType="com.springportfolio.domain.boards.Board">
+		select * from (select * from BOARDS where ${skey} like '%'||#{sval}||'%') BOARDS 
+		where num between #{start} and #{end} order by createDate desc
+	</select>
+	
+	<select id="selectCount" resultType="int">
+		select count(*) from BOARDS where ${skey} like '%'||#{sval}||'%'
+	</select>
+	
+	<insert id="createBoard" useGeneratedKeys="true" keyProperty="num" parameterType="com.springportfolio.domain.boards.Board">
+		insert into BOARDS(title, userId, contents, createDate, count)
+		values(#{title}, #{userId}, #{contents}, CURRENT_TIMESTAMP(), 0)
+	</insert>
+		 
+	<select id="selectOne" resultType="com.springportfolio.domain.boards.Board">
+		select * from BOARDS where num = #{num}
+	</select>
+	
+	<update id="updateBoard">
+		update BOARDS set title=#{title}, userId=#{userId}, contents=#{contents}, createDate=CURRENT_TIMESTAMP()
+		where num=#{num}
+	</update>
+	
+	<delete id="deleteBoard">
+		delete from BOARDS where num=#{num}
+	</delete>
+	
+	<update id="updateCount">
+		update BOARDS set count=#{count} where num=#{num}
+	</update>
+</mapper>
