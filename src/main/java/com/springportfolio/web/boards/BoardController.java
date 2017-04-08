@@ -2,6 +2,7 @@ package com.springportfolio.web.boards;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.springportfolio.dao.boards.BoardDAO;
+import com.springportfolio.dao.boards.BoardService;
 import com.springportfolio.domain.boards.Board;
 import com.springportfolio.domain.users.Authenticate;
 
@@ -24,8 +26,8 @@ import com.springportfolio.domain.users.Authenticate;
 public class BoardController {
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 	
-	@Autowired
-	private BoardDAO boardDao;
+	@Resource(name="boardService")
+	private BoardService boardService;
 	
 	@RequestMapping("/view")
 	public String view(HttpServletRequest request, Model model){
@@ -46,7 +48,7 @@ public class BoardController {
 		}
 		returnPage = "&skey="+skey+"&sval="+sval;
 		int pageNUM = 1;
-		int total = boardDao.selectCount(skey, sval);
+		int total = boardService.selectCount(skey, sval);
 		if(total%limit == 0){
 			pageCount = total/limit;
 		}else{
@@ -67,7 +69,7 @@ public class BoardController {
 			endPage=pageCount;
 		}
 		
-		List<Board> list = boardDao.select(skey, sval, start, end);
+		List<Board> list = boardService.select(skey, sval, start, end);
 		model.addAttribute("list", list);
 		model.addAttribute("total", total);
 		model.addAttribute("pageNUM", pageNUM);
@@ -81,10 +83,10 @@ public class BoardController {
 	
 	@RequestMapping("{num}/detail")
 	public String detail(@PathVariable int num, Model model){
-		Board board = boardDao.selectOne(num);
+		Board board = boardService.selectOne(num);
 		int count = board.getCount();
 		count+=1;
-		boardDao.updateCount(board.getNum(), count);
+		boardService.updateCount(board.getNum(), count);
 		model.addAttribute("board", board);
 		return "board/detail";
 	}
@@ -106,7 +108,7 @@ public class BoardController {
 		if(bindingResult.hasErrors()){
 			return "board/form";
 		}
-		boardDao.create(board);
+		boardService.create(board);
 		return "redirect:/boards/view";
 	}
 	
@@ -116,7 +118,7 @@ public class BoardController {
 		if(object == null){
 			throw new IllegalArgumentException();
 		}
-		Board board = boardDao.selectOne(num);
+		Board board = boardService.selectOne(num);
 		String userId = (String)object;
 		if(!board.matchUserId(userId)){
 			throw new IllegalArgumentException();
@@ -131,7 +133,7 @@ public class BoardController {
 		if(bindingResult.hasErrors()){
 			return "board/form";
 		}
-		boardDao.updateBoard(board);
+		boardService.updateBoard(board);
 		return "redirect:/boards/"+num+"/detail";
 	}
 	
@@ -142,11 +144,11 @@ public class BoardController {
 			throw new IllegalArgumentException();
 		}
 		String userId = (String)object;
-		Board board = boardDao.selectOne(num);
+		Board board = boardService.selectOne(num);
 		if(!board.matchUserId(userId)){
 			throw new IllegalArgumentException();
 		}
-		boardDao.delete(num);
+		boardService.delete(num);
 		return "redirect:/boards/view";
 	}
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.springportfolio.domain.boards.Board;
 
-@Repository
+@Repository("boardDao")
 public class MyBatisBoardDAO implements BoardDAO {
 	private static final Logger log = LoggerFactory.getLogger(MyBatisBoardDAO.class);
 	@Autowired
