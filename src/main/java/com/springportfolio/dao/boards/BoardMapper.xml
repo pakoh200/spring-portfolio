@@ -4,8 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="BoardMapper">
 	<select id="select" resultType="com.springportfolio.domain.boards.Board">
-		select * from (select * from BOARDS where ${skey} like '%'||#{sval}||'%') BOARDS 
-		where num between #{start} and #{end} order by createDate desc
+		select * from (select rownum rn, num, title, userId, contents, createDate, count from (select * from BOARDS where ${skey} like '%'||#{sval}||'%' order by createDate desc) BOARDS) 
+		where rn between #{start} and #{end}
 	</select>
 	
 	<select id="selectCount" resultType="int">

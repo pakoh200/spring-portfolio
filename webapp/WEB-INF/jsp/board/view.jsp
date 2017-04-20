@@ -43,16 +43,16 @@
                     <div class="col-lg-6">
                         <div class="table-responsive">
 							<div class="col-md-8">
-								<form class="form-inline">
-  				 					<label for="search">검색</label>
-									<select class="form-control">
-  										<option>제목</option>
-  										<option>아이디</option>
+								<form class="form-inline" action="/boards/view">
+									<label for="search">검색</label>
+									<select class="form-control" name="skey">
+  										<option value="title">제목</option>
+  										<option value="userId">아이디</option>
 									</select>
   									<div class="form-group">
-  				 						<input type="text" class="form-control" id="search" placeholder="검색">
- 									</div>
- 									<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+  				  						<input type="text" class="form-control" id="search" name="sval" placeholder="검색">
+ 				 					</div>
+ 				 					<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 								</form>
 							</div>	
 							<div class="col-md-2 col-md-offset-2">

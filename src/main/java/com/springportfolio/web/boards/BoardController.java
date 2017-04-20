@@ -71,7 +71,6 @@ public class BoardController {
 		
 		List<Board> list = boardService.select(skey, sval, start, end);
 		model.addAttribute("list", list);
-		model.addAttribute("total", total);
 		model.addAttribute("pageNUM", pageNUM);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);

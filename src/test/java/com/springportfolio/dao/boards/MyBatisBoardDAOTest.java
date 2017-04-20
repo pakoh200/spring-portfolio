@@ -36,7 +36,7 @@ public class MyBatisBoardDAOTest {
 	public void selectCount() {
 		String skey = "title", sval = "%%";
 		int total = boardDao.selectCount(skey, sval);
-		log.debug("list : {}", total);
+		log.debug("total : {}", total);
 	}
 	
 	@Test

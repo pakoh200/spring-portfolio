@@ -46,7 +46,7 @@ public class BoardService implements BoardDAO {
 
 	@Override
 	public int selectCount(String skey, String sval) {
-		return 0;
+		return myBatisBoardDao.selectCount(skey, sval);
 	}
 
 }

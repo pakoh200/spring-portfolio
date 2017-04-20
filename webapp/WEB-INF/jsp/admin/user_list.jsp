@@ -38,19 +38,6 @@
                 	
                     <div class="col-lg-6">
                         <div class="table-responsive">
-							<div class="col-md-8">
-								<form class="form-inline">
-  				 					<label for="search">검색</label>
-									<select class="form-control">
-  										<option>아이디</option>
-									</select>
-  									<div class="form-group">
-  				 						<input type="text" class="form-control" id="search" placeholder="검색">
- 									</div>
- 									<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-								</form>
-							</div>	
-							<!-- search -->
 		
                             <table class="table table-bordered table-hover table-striped">
                                 <thead>
@@ -75,26 +62,6 @@
 								</c:forEach>
                                 </tbody>
                             </table>
-                    		<nav align="center">
-								<ul class="pagination">
-									<c:if test="${startPage>limit}">
-									<li><a href="/boards/view?pageNum=${startPage-limt}${returnpage}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-									</c:if>
-									<c:forEach var="i" begin="${startPage}" end="${endPage}" step="1">
-									<c:choose>
-									<c:when test="${i==pageNUM}">
-									<li class="active"><a href=#>${i}</a></li>
-									</c:when>					
-									<c:otherwise>
-									<li><a href="/boards/view?pageNum=${i}${returnpage}">${i}</a></li>
-									</c:otherwise>
-									</c:choose>
-									</c:forEach>
-									<c:if test="${endPage<pageCount}">
-									<li><a href="/boards/view?pageNum=${startPage+limt}${returnpage}" aria-label="Next"> <span	aria-hidden="true">&raquo;</span></a></li>
-									</c:if>
-								</ul>
-							</nav>
                         </div>
                     </div>
                 </div>
