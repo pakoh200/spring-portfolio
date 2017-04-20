@@ -20,14 +20,18 @@ public class User {
 	@Email
 	private String email;
 
+	@NotEmpty
+	private String authority;
+
 	public User() {
 	}
 
-	public User(String userId, String password, String name, String email) {
+	public User(String userId, String password, String name, String email, String authority) {
 		this.userId = userId;
 		this.password = password;
 		this.name = name;
 		this.email = email;
+		this.authority = authority;
 	}
 
 	public String getUserId() {
@@ -62,6 +66,14 @@ public class User {
 		this.email = email;
 	}
 
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+
 	public boolean matchPassword(Authenticate authenticate) {
 		if (this.password == null) {
 			return false;
@@ -77,10 +89,10 @@ public class User {
 	}
 
 	public User update(User updateUser) {
-		if(!matchUserId(updateUser.getUserId())){
+		if (!matchUserId(updateUser.getUserId())) {
 			throw new IllegalArgumentException();
 		}
-		return new User(this.userId, updateUser.password, updateUser.name, updateUser.email);
+		return new User(this.userId, updateUser.password, updateUser.name, updateUser.email, updateUser.authority);
 	}
 
 	@Override
@@ -122,7 +134,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", name=" + name + ", email=" + email + "]";
+		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", authority=" + authority + "]";
 	}
 
 }

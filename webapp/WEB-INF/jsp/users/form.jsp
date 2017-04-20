@@ -78,6 +78,7 @@
     			<form:errors path="email" cssClass="error"/>
     		</div>
   		</div>
+  		<input type="hidden" name="authority" value="ROLE_USER">
 	 	<div class="form-group">
    			<div class="col-sm-offset-2 col-sm-10">
      			<button type="submit" class="btn btn-default">회원가입</button>

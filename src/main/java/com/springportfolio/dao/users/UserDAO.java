@@ -37,7 +37,7 @@ public class UserDAO extends JdbcDaoSupport {
 		RowMapper<User> rowMapper = new RowMapper<User>() {
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"));
+				return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"), rs.getString("authority"));
 			}
 		};
 		try {
@@ -48,18 +48,35 @@ public class UserDAO extends JdbcDaoSupport {
 	}
 
 	public void create(User user) {
-		String sql = "insert into USERS values(?, ?, ?, ?)";
-		getJdbcTemplate().update(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail());
+		String sql = "insert into USERS values(?, ?, ?, ?, ?)";
+		getJdbcTemplate().update(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), user.getAuthority());
 	}
 
 	public void update(User user) {
-		String sql = "update USERS set password = ?, name = ?, email = ? where userId = ?";
-		getJdbcTemplate().update(sql, user.getPassword(), user.getName(), user.getEmail(), user.getUserId());
+		String sql = "update USERS set password = ?, name = ?, email = ?, authority = ? where userId = ?";
+		getJdbcTemplate().update(sql, user.getPassword(), user.getName(), user.getEmail(), user.getAuthority(), user.getUserId());
 	}
 
 	public List<User> selectAll() {
 		String sql = "select * from USERS";
-		List<User> users  = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(User.class));
-		return users;
+		 RowMapper<User> rowMapper = new RowMapper<User>() {
+			 @Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"), rs.getString("authority"));
+			}
+		};
+		List<User> list = getJdbcTemplate().query(sql, rowMapper);
+		//List<User> users  = getJdbcTemplate().query(sql, new BeanPropertyRowMapper(User.class));
+		return list;
+	}
+
+	public void delete(String userId) {
+		String sql = "delete from USERS where userId = ?";
+		getJdbcTemplate().update(sql, userId);
+	}
+
+	public void updateAuthority(String authority, String userId) {
+		String sql = "update USERS set authority = ? where userId = ?";
+		getJdbcTemplate().update(sql, authority, userId);		
 	}
 }

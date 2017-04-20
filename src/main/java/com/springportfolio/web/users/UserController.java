@@ -120,4 +120,18 @@ public class UserController {
 		session.removeAttribute("userId");
 		return "redirect:/";
 	}
+	
+	@RequestMapping("{userId}/delete")
+	public String delete(@PathVariable String userId, HttpSession session){
+		if(userId == null){
+			throw new IllegalArgumentException("사용자 아이디가 필요합니다.");
+		}
+		Object temp = session.getAttribute("userId");
+		String sessionUserId = (String)temp;
+		if(!sessionUserId.equals(userId)){
+			throw new NullPointerException();
+		}
+		userDao.delete(userId);
+		return "redirect:/users/logout";
+	}
 }

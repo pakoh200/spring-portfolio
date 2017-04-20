@@ -41,7 +41,6 @@
                     		<img src="/stylesheets/image/member.jpg" class="img-responsive" alt="Responsive image">
       						<div class="caption">
       							<p class="text-center">${user.name} 님</p>
-        						<p><a href="#" class="btn btn-default" role="button">회원탈퇴</a></p>
       						</div>
     					</div>
                     </div>
@@ -80,9 +79,16 @@
     			<form:errors path="email" cssClass="error"/>
     		</div>
   		</div>
+  		<div class="form-group">
+    		<label for="authority" class="col-sm-2 control-label">authority</label>
+    		<div class="col-sm-6">
+    			<input type="text" name="authority" value="${user.authority}" readonly>
+    		</div>
+  		</div>
 	 	<div class="form-group">
    			<div class="col-sm-offset-2 col-sm-10">
      			<button type="submit" class="btn btn-default">개인정보수정</button>
+     			<a href="/users/${user.userId}/delete" class="btn btn-default" role="button">회원탈퇴</a>
    			</div>
   		</div>
 	</form:form>

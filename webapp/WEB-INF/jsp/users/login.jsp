@@ -55,7 +55,7 @@
 		</c:if>
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
       <div class="form-signin" align="center">
-      <span class="col-sm-4"><a href="#">회원가입</a></span><span class="col-sm-6 col-sm-offset-2"><a href="#">비밀번호 찾기</a></span>
+      <span class="col-sm-4"><a href="/users/form">회원가입</a></span><span class="col-sm-6 col-sm-offset-2"><a href="#">비밀번호 찾기</a></span>
       </div>
       </form>
 

@@ -5,9 +5,11 @@ userId varchar(12) not null,
 password varchar(12) not null,
 name varchar(30) not null,
 email varchar(50),
+authority varchar(20) not null,
 primary key (userId));
 
-insert into USERS values('test', 'test','test','test@test.test');
+insert into USERS values('test', 'test','test','test@test.test', 'ROLE_USER');
+insert into USERS values('admin', 'admin','admin','admin@test.test', 'ROLE_ADMIN');
 
 DROP TABLE IF EXISTS BOARDS;
 

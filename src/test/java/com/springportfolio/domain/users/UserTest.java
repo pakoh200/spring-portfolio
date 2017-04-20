@@ -28,7 +28,7 @@ public class UserTest {
 
 	@Test
 	public void userIdWhenIsEmpty() {
-		User user = new User("", "password", "name", "email@test.test");
+		User user = new User("", "password", "name", "email@test.test", "ROLE_USER");
 		Set<ConstraintViolation<User>> constraintViolations = validator.validate(user);
 		assertThat(constraintViolations.size(), is(2));
 		for (ConstraintViolation<User> constraintViolation : constraintViolations) {
@@ -39,7 +39,7 @@ public class UserTest {
 	@Test
 	public void matchPassword() throws Exception {
 		Authenticate authenticate = new Authenticate("userId", "password");
-		User user = new User("userId", "password", "name", "email@test.test");
+		User user = new User("userId", "password", "name", "email@test.test", "ROLE_USER");
 		assertTrue(user.matchPassword(authenticate));
 		
 		authenticate = new Authenticate("userId", "password2");
@@ -48,15 +48,15 @@ public class UserTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void updateWhenMisMatchUserId() throws Exception {
-		User user = new User("userId", "password", "name", "email@test.test");
-		User updateUser = new User("user", "password", "name", "email@test.test");
+		User user = new User("userId", "password", "name", "email@test.test", "ROLE_USER");
+		User updateUser = new User("user", "password", "name", "email@test.test", "ROLE_USER");
 		user.update(updateUser);
 	}
 	
 	@Test
 	public void update() throws Exception {
-		User user = new User("userId", "password", "name", "email@test.test");
-		User updateUser = new User("userId", "password", "uname", "uemail@test.test");
+		User user = new User("userId", "password", "name", "email@test.test", "ROLE_USER");
+		User updateUser = new User("userId", "password", "uname", "uemail@test.test", "ROLE_USER");
 		User updatedUser = user.update(updateUser);
 		assertThat(updatedUser, is(updatedUser));
 	}

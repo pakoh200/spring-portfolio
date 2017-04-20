@@ -40,7 +40,7 @@ public class MyBatisTest {
 	@Test
 	public void create() throws Exception {
 		try (SqlSession session = sqlSessionFactory.openSession()) {
-			User user = new User("test2", "test2", "test2", "test2@test.test");
+			User user = new User("test2", "test2", "test2", "test2@test.test", "ROLE_USER");
 			session.insert("UserMapper.create", user);
 			User actual = session.selectOne("UserMapper.findById", user.getUserId());
 			assertThat(actual, is(user));

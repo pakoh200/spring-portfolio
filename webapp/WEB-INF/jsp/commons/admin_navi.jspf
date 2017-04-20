@@ -43,16 +43,13 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="/"><i class="glyphicon glyphicon-home"></i> Main</a>
+                        <a href="/admin/main"><i class="glyphicon glyphicon-wrench"></i> 관리자 페이지</a>
                     </li>
                     <li>
-                        <a href="/users/${sessionScope.userId}/info"><i class="glyphicon glyphicon-user"></i> 회원정보</a>
+                        <a href="/admin/users"><i class="glyphicon glyphicon-user"></i> 회원관리</a>
                     </li>
                     <li>
-                        <a href="/boards/view"><i class="glyphicon glyphicon-list-alt"></i> 게시판</a>
-                    </li>
-                    <li>
-                        <a href="/admin/main"><i class="glyphicon glyphicon-wrench"></i> 관린자 메뉴</a>
+                        <a href="/admin/boards"><i class="glyphicon glyphicon-list-alt"></i> 게시판 관리</a>
                     </li>
                 </ul>
             </div>

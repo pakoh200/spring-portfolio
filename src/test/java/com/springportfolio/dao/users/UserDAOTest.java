@@ -1,7 +1,7 @@
 package com.springportfolio.dao.users;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class UserDAOTest {
 	
 	@Test
 	public void create() throws Exception {
-		User user = new User("test2","test2","test2", "test2@test.test");
+		User user = new User("test2","test2","test2", "test2@test.test", "ROLE_USER");
 		userDao.create(user);
 		User actual = userDao.findById(user.getUserId());
 		assertThat(actual, is(user));
@@ -42,5 +42,18 @@ public class UserDAOTest {
 	public void list() throws Exception {
 		List<User> list = userDao.selectAll();
 		log.debug("User list : {}", list);;
+	}
+	
+	@Test
+	public void delete() throws Exception {
+		userDao.delete("test");
+		assertNull(userDao.findById("test"));
+	}
+	
+	@Test
+	public void updateAuthority() throws Exception {
+		userDao.updateAuthority("ROLE_ADMIN", "test");
+		User user = userDao.findById("test");
+		log.debug("User : {}", user);
 	}
 }
