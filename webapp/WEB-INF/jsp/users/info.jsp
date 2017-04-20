@@ -14,7 +14,7 @@
 
     <div id="wrapper">
 
-        <%@ include file="../commons/navigation.jspf" %>
+         <%@ include file="../commons/navigation.jspf" %>
 
         <div id="page-wrapper">
 
@@ -24,11 +24,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            회원가입 <small>Member Sign Up</small>
+                            회원정보 <small>Member Info</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="glyphicon glyphicon-edit"></i> Member Sign Up
+                                <i class="glyphicon glyphicon-user"></i> Member Info
                             </li>
                         </ol>
                     </div>
@@ -36,20 +36,22 @@
                 <!-- /.row -->
 
                 <div class="row">
+                    <div class="col-xs-4">
+                    	<div class="thumbnail">
+                    		<img src="/stylesheets/image/member.jpg" class="img-responsive" alt="Responsive image">
+      						<div class="caption">
+      							<p class="text-center">${user.name} 님</p>
+        						<p><a href="#" class="btn btn-default" role="button">회원탈퇴</a></p>
+      						</div>
+    					</div>
+                    </div>
                      <div class="col-xs-8">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="glyphicon glyphicon-edit"></i> 회원가입</h3>
+                                <h3 class="panel-title"><i class="glyphicon glyphicon-user"></i> 회원정보</h3>
                             </div>
                             <div class="panel-body">
-                            	<form:form modelAttribute="user" cssClass="form-horizontal" action="/users" method="post">
-		<c:if test="${not empty errorMessage}">
-		<div class="alert alert-danger" role="alert">
-  			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
- 			<span class="sr-only">Error:</span>
-  				${errorMessage}
-		</div>
-		</c:if>
+                            	<form:form modelAttribute="user" cssClass="form-horizontal" action="/users" method="put">
 		<div class="form-group">
     		<label for="userId" class="col-sm-2 control-label">User Id</label>
     		<div class="col-sm-6">
@@ -80,7 +82,7 @@
   		</div>
 	 	<div class="form-group">
    			<div class="col-sm-offset-2 col-sm-10">
-     			<button type="submit" class="btn btn-default">회원가입</button>
+     			<button type="submit" class="btn btn-default">개인정보수정</button>
    			</div>
   		</div>
 	</form:form>
@@ -102,7 +104,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <%@ include file="../commons/footer.jspf" %>
+   <%@ include file="../commons/footer.jspf" %>
 
 </body>
 

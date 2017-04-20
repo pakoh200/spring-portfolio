@@ -55,15 +55,14 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("{userId}/form")
+	@RequestMapping("{userId}/info")
 	public String updateForm(@PathVariable String userId, Model model){
 		if(userId == null){
 			throw new IllegalArgumentException("사용자 아이디가 필요합니다.");
 		}
 		User user = userDao.findById(userId);
-		model.addAttribute("isUpdate", true);
 		model.addAttribute("user", user);
-		return "users/form";
+		return "users/info";
 	}
 	
 	@RequestMapping(value="", method=RequestMethod.PUT)

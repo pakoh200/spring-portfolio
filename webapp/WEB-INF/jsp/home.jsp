@@ -1,57 +1,79 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
+
 <head>
-<%@ include file="./commons/_head.jspf" %>
+
+    <%@ include file="./commons/header.jspf" %>
+
 </head>
+
 <body>
-<%@ include file="./commons/_navi.jspf" %>
 
-<div class="row">
-  <div class="col-sm-6 col-md-3">
-    <div class="thumbnail">
-      <img src="example.jpg" alt="...">
-      <div class="caption">
-        <h3>JSP 회원 CRUD github</h3>
-        <p>github에 올렸습니다.</p>
-        <p><a href="/form.html" class="btn btn-default" role="button">구경하기</a> </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-3">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Spring 회원 CRUD</h3>
-        <p>...</p>
-        <p><a href="/login.html" class="btn btn-default" role="button">구경하기</a> </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-3">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Spring-boot 회원 CRUD</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-default" role="button">구경하기</a> </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-3">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Mybatis 게시판</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-default" role="button">구경하기</a> </p>
-      </div>
-    </div>
-  </div>
-</div>
+    <div id="wrapper">
 
+       <%@ include file="./commons/navigation.jspf" %>
 
-	<%@ include file="./commons/_footer.jspf" %>
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Main <small>소개</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="glyphicon glyphicon-home"></i> Main
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <i class="fa fa-info-circle"></i>  <strong>환영합니다!</strong> 나날이 발전하고 있는 프로그래머 <strong>박호철</strong>입니다!
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <p>이 프로젝트는....<br>이프</p>
+                        <p>이 프로젝트는....</p>
+                        히히히
+                        <ol>
+                        	<li>하하하</li>
+                        	<li>히히히</li>
+                        	<li>호호호</li>
+                        	<li>헤헤헤</li>
+                        	<li>후후후</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                
+                <%@ include file="./commons/github.jspf" %>
+                 <!-- /.github -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+   <%@ include file="./commons/footer.jspf" %>
+
 </body>
+
 </html>
