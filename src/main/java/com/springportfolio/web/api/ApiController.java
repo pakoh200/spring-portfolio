@@ -37,8 +37,8 @@ public class ApiController {
 		int pageNUM = Integer.parseInt(pnum);
 		int start = (pageNUM-1)*10+1;
 		
-		String clientId = "U4hL8SaxCwPPVLYihW6z";// 애플리케이션 클라이언트 아이디값";
-		String clientSecret = "iRTdcoI8l2";// 애플리케이션 클라이언트 시크릿값";
+		String clientId = "id";// 애플리케이션 클라이언트 아이디값";
+		String clientSecret = "secret";// 애플리케이션 클라이언트 시크릿값";
 		try {
 			String text = URLEncoder.encode(title, "UTF-8");
 			String apiURL = "https://openapi.naver.com/v1/search/movie?query=" + text + "&start=" + start; // json
