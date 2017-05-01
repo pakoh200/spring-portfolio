@@ -1,4 +1,4 @@
-package com.springportfolio.dao.naver;
+package com.springportfolio.naver;
 
 import com.springportfolio.domain.users.User;
 

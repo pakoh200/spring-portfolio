@@ -23,8 +23,8 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import com.springportfolio.dao.naver.SnsUser;
 import com.springportfolio.domain.users.User;
+import com.springportfolio.naver.SnsUser;
 
 public class UserDAO extends JdbcDaoSupport {
 	private static final Logger log = LoggerFactory.getLogger(UserDAO.class);

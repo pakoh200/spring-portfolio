@@ -11,9 +11,9 @@ import java.security.SecureRandom;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springportfolio.dao.naver.NaverProfileResponse;
-import com.springportfolio.dao.naver.NaverUser;
-import com.springportfolio.dao.naver.Token;
+import com.springportfolio.naver.NaverProfileResponse;
+import com.springportfolio.naver.NaverUser;
+import com.springportfolio.naver.Token;
 
 public class Utils {
 	

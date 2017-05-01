@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.springportfolio.dao.naver.NaverUser;
-import com.springportfolio.dao.naver.SnsUser;
-import com.springportfolio.dao.naver.Token;
 import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.users.Authenticate;
 import com.springportfolio.domain.users.User;
+import com.springportfolio.naver.NaverUser;
+import com.springportfolio.naver.SnsUser;
+import com.springportfolio.naver.Token;
 import com.springportfolio.support.Utils;
 
 @Controller

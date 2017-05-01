@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.springportfolio.dao.naver.NaverUser;
-import com.springportfolio.dao.naver.SnsUser;
 import com.springportfolio.domain.users.User;
+import com.springportfolio.naver.NaverUser;
+import com.springportfolio.naver.SnsUser;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
