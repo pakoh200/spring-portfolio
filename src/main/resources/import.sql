@@ -1,20 +1,21 @@
 DROP TABLE IF EXISTS USERS;
 
 CREATE TABLE USERS(
-userId varchar(12) not null,
-password varchar(12) not null,
-name varchar(30) not null,
+id int(11) not null auto_increment,
+userId varchar(12) null UNIQUE,
+password varchar(12) null,
+name varchar(30) null,
 email varchar(50),
-authority varchar(20) not null,
-primary key (userId));
+authority varchar(20) null,
+primary key (id));
 
-insert into USERS values('test', 'test','test','test@test.test', 'ROLE_USER');
-insert into USERS values('admin', 'admin','admin','admin@test.test', 'ROLE_ADMIN');
+INSERT INTO USERS VALUES('1','test', 'test','test','test@test.test', 'ROLE_USER');
+insert into USERS(userId, password, name, email, authority) values('admin', 'admin','admin','admin@test.test', 'ROLE_ADMIN');
 
 DROP TABLE IF EXISTS BOARDS;
 
 CREATE TABLE BOARDS(
-num int(8) not null auto_increment,
+num int(11) not null auto_increment,
 title varchar(60) not null,
 userId varchar(12) not null,
 contents varchar(300) not null,
@@ -44,4 +45,14 @@ insert into BOARDS(title, userId, contents, createDate, count)
 values('1010','userId', '101010101010', CURRENT_TIMESTAMP(), 0);
 insert into BOARDS(title, userId, contents, createDate, count)
 values('1111','userId', '11111111111', CURRENT_TIMESTAMP(), 0);
+
+DROP TABLE IF EXISTS SNS_INFO;
+
+CREATE TABLE SNS_INFO (
+  id int(11) NOT NULL,
+  sns_id varchar(255) NOT NULL,
+  sns_type varchar(10) NULL,
+  sns_name varchar(255) NULL,  
+  CONSTRAINT id FOREIGN KEY (id) REFERENCES USERS (id)
+);
 

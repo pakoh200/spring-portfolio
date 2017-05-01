@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserMapper">
+	
+	<resultMap id="snsUserResultMap" type="net.mtest4.domain.api.SnsUser">
+		<result property="id" column="id" />
+		<result property="snsId" column="sns_id" />
+		<result property="snsType" column="sns_type" />
+		<result property="snsName" column="sns_name" />
+	</resultMap>
+
+	<select id="findById" resultType="net.mtest4.domain.users.User">
+		select * from USERS where userId = #{userId}
+	</select>
+	
+	<select id="findByIntId" resultType="net.mtest4.domain.users.User">
+		select * from USERS where id = #{id}
+	</select>
+	
+	<select id="findBySnsId" resultMap="snsUserResultMap">
+		select * from SNS_INFO where sns_id = #{snsId}
+	</select>
+	
+	<insert id="create">
+		insert into USERS(userId, password, name, email) values(#{userId}, #{password}, #{name}, #{email})
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+	</insert>
+	
+	<update id="update">
+		update USERS set password=#{password}, name=#{name}, email=#{email} where userId=#{userId}
+	</update>
+	
+	<insert id="createSnsUser">
+		insert into SNS_INFO values(#{id}, #{snsId}, #{snsType}, #{snsName})
+	</insert>
+	
+</mapper>

@@ -1,7 +1,9 @@
 package com.springportfolio.web.users;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -15,10 +17,15 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.springportfolio.dao.naver.NaverUser;
+import com.springportfolio.dao.naver.SnsUser;
+import com.springportfolio.dao.naver.Token;
 import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.users.Authenticate;
 import com.springportfolio.domain.users.User;
+import com.springportfolio.support.Utils;
 
 @Controller
 @RequestMapping("/users")
@@ -133,5 +140,58 @@ public class UserController {
 		}
 		userDao.delete(userId);
 		return "redirect:/users/logout";
+	}
+	
+	@RequestMapping(value = "/naverLogin")
+	public String naverLogin(HttpSession session) {
+		String mydomain = "http%3A%2F%2F127.0.0.1%3A8080%2Fusers%2Fcallback";
+		String clientId = "id";
+		String requestUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri="
+				+ mydomain + "&state=";
+		String state = Utils.generateState(); // 토큰을 생성합니다.
+		session.setAttribute("state", state); // 세션에 토큰을 저장합니다.
+		return "redirect:" + requestUrl + state; // 만들어진 URL로 인증을 요청합니다.
+	}
+
+	@RequestMapping("/callback")
+	public String callback(@RequestParam String state, @RequestParam String code, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
+		String storedState = (String) request.getSession().getAttribute("state");
+		if (!state.equals(storedState)) {
+			System.out.println("401 unauthorized");
+			return "redirect:/";
+		}
+		
+		String clientId = "id";
+		String clientSecret = "secret";
+		String mydomain = "http%3A%2F%2F127.0.0.1%3A8080%2Fusers%2Fcallback";
+		String access_token = null;
+		String refresh_token = null;
+		String token_type = null;
+
+		String accessUrl = "https://nid.naver.com/oauth2.0/token?client_id=" + clientId + "&client_secret=" + clientSecret
+				+ "&grant_type=authorization_code" + "&state=" + state + "&code=" + code;
+		
+		String tokens = Utils.getJson(accessUrl, null);
+		Token token = Utils.getToken(tokens);
+		access_token = token.getAccess_token();
+		token_type = token.getToken_type();
+		
+
+		String naverUserUrl = "https://openapi.naver.com/v1/nid/me";
+		
+		String naver = Utils.getJson(naverUserUrl, token_type + " " + access_token);
+		NaverUser naverUser = Utils.getNaverUser(naver);
+		SnsUser snsUser = new SnsUser(naverUser);
+		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
+		if(dbSnsUser == null){
+			int id = userDao.create(snsUser);
+			snsUser.setId(id);
+			userDao.createSnsUser(snsUser);
+			dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
+		}
+		User user = userDao.findByIntId(dbSnsUser.getId());
+		session.setAttribute("userId", user.getName());
+		
+		return "redirect:/";
 	}
 }

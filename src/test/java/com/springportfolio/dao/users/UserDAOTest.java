@@ -1,7 +1,8 @@
 package com.springportfolio.dao.users;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.springportfolio.dao.naver.NaverUser;
+import com.springportfolio.dao.naver.SnsUser;
 import com.springportfolio.domain.users.User;
 
 
@@ -31,10 +34,18 @@ public class UserDAOTest {
 	}
 	
 	@Test
+	public void findByIntId() {
+		User user = userDao.findByIntId(1);
+		log.debug("User : {}", user);
+	}
+	
+	@Test
 	public void create() throws Exception {
 		User user = new User("test2","test2","test2", "test2@test.test", "ROLE_USER");
-		userDao.create(user);
+		int id = userDao.create(user);
+		log.debug("id : {}", id);
 		User actual = userDao.findById(user.getUserId());
+		log.debug("actual : {}", actual);
 		assertThat(actual, is(user));
 	}
 	
@@ -55,5 +66,20 @@ public class UserDAOTest {
 		userDao.updateAuthority("ROLE_ADMIN", "test");
 		User user = userDao.findById("test");
 		log.debug("User : {}", user);
+	}
+	
+	@Test
+	public void createSnsUser() throws Exception {
+		NaverUser naverUser = new NaverUser("sns@test.test", "sns", "1234", "http://test.test", "20-30", "M", "12345", "Å×½ºÆ®",	"9-10");
+		SnsUser snsUser = new SnsUser(naverUser);
+		log.debug("id : {}", snsUser.getId());
+		int id = userDao.create(snsUser);
+		log.debug("id : {}", snsUser.getId());
+		User user = userDao.findByIntId(id);
+		log.debug("user : {}", user);
+		snsUser.setId(id);
+		userDao.createSnsUser(snsUser);
+		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
+		log.debug("dbSnsUser : {}", dbSnsUser);
 	}
 }
