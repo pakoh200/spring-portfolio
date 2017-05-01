@@ -145,7 +145,7 @@ public class UserController {
 	@RequestMapping(value = "/naverLogin")
 	public String naverLogin(HttpSession session) {
 		String mydomain = "http%3A%2F%2F127.0.0.1%3A8080%2Fusers%2Fcallback";
-		String clientId = "U4hL8SaxCwPPVLYihW6z";
+		String clientId = "id";
 		String requestUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri="
 				+ mydomain + "&state=";
 		String state = Utils.generateState(); // 토큰을 생성합니다.
@@ -161,9 +161,8 @@ public class UserController {
 			return "redirect:/";
 		}
 		
-		String clientId = "U4hL8SaxCwPPVLYihW6z";
-		String clientSecret = "iRTdcoI8l2";
-		String mydomain = "http%3A%2F%2F127.0.0.1%3A8080%2Fusers%2Fcallback";
+		String clientId = "id";
+		String clientSecret = "secret";
 		String access_token = null;
 		String refresh_token = null;
 		String token_type = null;
