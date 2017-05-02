@@ -20,7 +20,7 @@ public class SnsUser extends User{
 	}
 
 	public SnsUser(NaverUser naverUser) {
-		super(null, null, naverUser.getName(), naverUser.getEmail(), "Role_User");
+		super(null, null, naverUser.getName(), naverUser.getEmail(), "ROLE_USER");
 		this.snsId = naverUser.getId();
 		this.snsType = "NAVER";
 		this.snsName = naverUser.getName();

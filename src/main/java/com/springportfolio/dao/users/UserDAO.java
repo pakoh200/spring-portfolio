@@ -1,6 +1,5 @@
 package com.springportfolio.dao.users;
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +14,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -42,7 +39,7 @@ public class UserDAO extends JdbcDaoSupport {
 		RowMapper<User> rowMapper = new RowMapper<User>() {
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"),
+				return new User(rs.getInt("id"), rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"),
 						rs.getString("authority"));
 			}
 		};
@@ -55,10 +52,7 @@ public class UserDAO extends JdbcDaoSupport {
 
 	public int create(User user) {
 		String sql = "insert into USERS(userId, password, name, email, authority) values(?, ?, ?, ?, ?)";
-		//SqlParameterSource fileParameters = new BeanPropertySqlParameterSource(user);
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-//		getJdbcTemplate().update(sql, fileParameters, keyHolder);
-		//getJdbcTemplate().update(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), user.getAuthority(), keyHolder);
 		getJdbcTemplate().update(new PreparedStatementCreator() {
 			
 			@Override
@@ -73,7 +67,6 @@ public class UserDAO extends JdbcDaoSupport {
 			}
 		}, keyHolder);
 		return keyHolder.getKey().intValue();
-		//getJdbcTemplate().update(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), user.getAuthority());
 	}
 
 	public void update(User user) {
@@ -86,24 +79,22 @@ public class UserDAO extends JdbcDaoSupport {
 		RowMapper<User> rowMapper = new RowMapper<User>() {
 			@Override
 			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-				return new User(rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"),
+				return new User(rs.getInt("id"), rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"),
 						rs.getString("authority"));
 			}
 		};
 		List<User> list = getJdbcTemplate().query(sql, rowMapper);
-		// List<User> users = getJdbcTemplate().query(sql, new
-		// BeanPropertyRowMapper(User.class));
 		return list;
 	}
 
-	public void delete(String userId) {
-		String sql = "delete from USERS where userId = ?";
-		getJdbcTemplate().update(sql, userId);
+	public void delete(int id) {
+		String sql = "delete from USERS where id = ?";
+		getJdbcTemplate().update(sql, id);
 	}
 
-	public void updateAuthority(String authority, String userId) {
-		String sql = "update USERS set authority = ? where userId = ?";
-		getJdbcTemplate().update(sql, authority, userId);
+	public void updateAuthority(String authority, int id) {
+		String sql = "update USERS set authority = ? where id = ?";
+		getJdbcTemplate().update(sql, authority, id);
 	}
 
 	public User findByIntId(int id) {

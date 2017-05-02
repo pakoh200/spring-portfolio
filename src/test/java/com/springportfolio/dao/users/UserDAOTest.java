@@ -57,14 +57,14 @@ public class UserDAOTest {
 	
 	@Test
 	public void delete() throws Exception {
-		userDao.delete("test");
-		assertNull(userDao.findById("test"));
+		userDao.delete(1);
+		assertNull(userDao.findByIntId(1));
 	}
 	
 	@Test
 	public void updateAuthority() throws Exception {
-		userDao.updateAuthority("ROLE_ADMIN", "test");
-		User user = userDao.findById("test");
+		userDao.updateAuthority("ROLE_ADMIN", 1);
+		User user = userDao.findByIntId(1);
 		log.debug("User : {}", user);
 	}
 	

@@ -63,13 +63,13 @@
                             <table class="table table-bordered table-hover table-striped">
                                 <thead>
                                     <tr>
-										<th>#</th><th>제목</th><th>아이디</th><th>날짜</th><th>조회수</th>
+										<th width="7%">#</th><th width="50%">제목</th><th width="15%">아이디</th><th width="20%">날짜</th><th width="8%">조회수</th>
 									</tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach var="list" items="${list}">
 									<tr>
-										<td>${list.num}</td><td><a href="/boards/${list.num}/detail">${list.title}</a></td><td>${list.userId}</td><td><fmt:formatDate value="${list.createDate}" pattern="yyyy.MM.dd HH:mm:ss"/></td><td>${list.count}</td>
+										<td>${list.num}</td><td><a href="/boards/${list.num}/detail">${list.title}</a></td><td>${list.name}</td><td><fmt:formatDate value="${list.createDate}" pattern="yyyy.MM.dd HH:mm:ss"/></td><td>${list.count}</td>
 									</tr>
 								</c:forEach>
                                 </tbody>

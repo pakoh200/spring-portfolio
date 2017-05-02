@@ -16,16 +16,16 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
             	<c:choose>
-            		<c:when test="${empty sessionScope.userId}">
+            		<c:when test="${empty sessionScope.user}">
             			<li><a href="/users/login/form"><span class="glyphicon glyphicon-log-in" title="로그인"></span></a></li>
         				<li><a href="/users/form"><span class="glyphicon glyphicon-edit" title="회원가입"></a></li>
             		</c:when>
             		<c:otherwise>
               		  <li class="dropdown">
-             			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${sessionScope.userId}님 <b class="caret"></b></a>
+             			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${sessionScope.user.name}님 <b class="caret"></b></a>
             		    <ul class="dropdown-menu">
                         	<li>
-                        	    <a href="/users/${sessionScope.userId}/info"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        	    <a href="/users/${sessionScope.user.id}/info"><i class="fa fa-fw fa-user"></i> Profile</a>
                       		</li>
                        	 	<li>
                          	   <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>

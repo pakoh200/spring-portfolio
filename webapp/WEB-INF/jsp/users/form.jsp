@@ -82,6 +82,7 @@
 	 	<div class="form-group">
    			<div class="col-sm-offset-2 col-sm-10">
      			<button type="submit" class="btn btn-default">회원가입</button>
+     			<a href="/users/naverLogin"><img src="/stylesheets/image/naver_login_Green.PNG" width="160"></a>
    			</div>
   		</div>
 	</form:form>

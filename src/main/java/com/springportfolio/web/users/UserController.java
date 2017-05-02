@@ -57,17 +57,22 @@ public class UserController {
 			model.addAttribute("errorMessage", "존재하는 아이디입니다.");
 			return "users/form";
 		}
+		if(user.getUserId().equals("admin")){
+			user.setAuthority("ROLE_ADMIN");
+		}
 		userDao.create(user);
 		log.debug("databaseUser : {}", userDao.findById(user.getUserId()));
 		return "redirect:/";
 	}
 	
-	@RequestMapping("{userId}/info")
-	public String updateForm(@PathVariable String userId, Model model){
-		if(userId == null){
+	@RequestMapping("{id}/info")
+	public String updateForm(@PathVariable Integer id, Model model){
+		log.debug("id : {}", id);
+		if(id == null){
 			throw new IllegalArgumentException("사용자 아이디가 필요합니다.");
 		}
-		User user = userDao.findById(userId);
+		User user = userDao.findByIntId(id);
+		log.debug("User : {}", user);
 		model.addAttribute("user", user);
 		return "users/info";
 	}
@@ -83,12 +88,12 @@ public class UserController {
 			}
 			return "users/form";
 		}
-		Object temp = session.getAttribute("userId");
+		Object temp = session.getAttribute("user");
 		if(temp == null){
 			throw new NullPointerException();
 		}
-		String userId = (String)temp;
-		if(!user.matchUserId(userId)){
+		User sessionedUser = (User)temp;
+		if(!user.matchUserId(sessionedUser.getUserId())){
 			throw new NullPointerException();
 		}
 		
@@ -117,28 +122,30 @@ public class UserController {
 			model.addAttribute("errorMessage", "비밀번호가 틀립니다.");
 			return "users/login";
 		}
+		log.debug("User : {}", user);
 		
-		session.setAttribute("userId", user.getUserId());
+		session.setAttribute("user", user);
 		return "redirect:/";
 	}
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session){
-		session.removeAttribute("userId");
+		session.removeAttribute("user");
 		return "redirect:/";
 	}
 	
-	@RequestMapping("{userId}/delete")
-	public String delete(@PathVariable String userId, HttpSession session){
-		if(userId == null){
+	@RequestMapping("{id}/delete")
+	public String delete(@PathVariable Integer id, HttpSession session){
+		if(id == null){
 			throw new IllegalArgumentException("사용자 아이디가 필요합니다.");
 		}
-		Object temp = session.getAttribute("userId");
-		String sessionUserId = (String)temp;
-		if(!sessionUserId.equals(userId)){
+		Object temp = session.getAttribute("user");
+		User sessionedUser = (User)temp;
+		if(sessionedUser.getId() != id){
 			throw new NullPointerException();
 		}
-		userDao.delete(userId);
+		User user = userDao.findByIntId(id);
+		userDao.delete(user.getId());
 		return "redirect:/users/logout";
 	}
 	
@@ -157,12 +164,15 @@ public class UserController {
 	public String callback(@RequestParam String state, @RequestParam String code, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
 		String storedState = (String) request.getSession().getAttribute("state");
 		if (!state.equals(storedState)) {
-			System.out.println("401 unauthorized");
 			return "redirect:/";
 		}
 		
+		String error = request.getParameter("error");
+		String errorDescription = request.getParameter("error_description");
+		log.debug("error : {}, error_description : {}",error, errorDescription);
+		
 		String clientId = "id";
-		String clientSecret = "secret";
+		String clientSecret = "password";
 		String access_token = null;
 		String refresh_token = null;
 		String token_type = null;
@@ -189,7 +199,7 @@ public class UserController {
 			dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
 		}
 		User user = userDao.findByIntId(dbSnsUser.getId());
-		session.setAttribute("userId", user.getName());
+		session.setAttribute("user", user);
 		
 		return "redirect:/";
 	}

@@ -50,14 +50,14 @@
 									<tr>
 										<td>${user.userId}</td><td>${user.name}</td><td>${user.email}</td>
 										<td>
-										<form action="/admin/${user.userId}/authority" method="post">
+										<form action="/admin/${user.id}/authority" method="post">
 										<select name="authority">
 											<option value="ROLE_USER">사용자</option>
 											<option value="ROLE_ADMIN">관리자</option>
 										</select>
 										<button type="submit" class="btn btn-default">수정</button>
 										</form></td>
-										<td><a class="btn btn-default" href="/admin/${user.userId}/delete" role="button">삭제</a></td>
+										<td><a class="btn btn-default" href="/admin/${user.id}/delete" role="button">삭제</a></td>
 									</tr>
 								</c:forEach>
                                 </tbody>

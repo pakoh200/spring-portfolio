@@ -41,7 +41,7 @@ public class MyBatisBoardDAOTest {
 	
 	@Test
 	public void create() throws Exception {
-		Board board = new Board(2,"한글", "userId", "가나다라", new java.util.Date(), 0);
+		Board board = new Board(2,"한글", "name", "가나다라", new java.util.Date(), 0);
 		log.debug("Board : {}", board);
 		boardDao.create(board);
 		
@@ -53,9 +53,9 @@ public class MyBatisBoardDAOTest {
 	
 	@Test
 	public void update() throws Exception {
-		Board board = new Board(2,"한글", "userId", "가나다라", new java.util.Date(), 0);
+		Board board = new Board(12,"한글", "name", "가나다라", new java.util.Date(), 0);
 		boardDao.create(board);
-		Board updateBoard = new Board(2,"한글", "userId", "마바사아", new java.util.Date() ,1);
+		Board updateBoard = new Board(12,"한글", "name", "마바사아", new java.util.Date() ,1);
 		log.debug("updateBoard : {}", updateBoard);
 		boardDao.updateBoard(updateBoard);
 		Board updatedBoard = boardDao.selectOne(board.getNum());
@@ -72,7 +72,7 @@ public class MyBatisBoardDAOTest {
 	@Test
 	public void updateCount() throws Exception {
 		int count = 0;
-		Board board = new Board(2,"한글", "userId", "가나다라", new java.util.Date(), count);
+		Board board = new Board(2,"한글", "name", "가나다라", new java.util.Date(), count);
 		boardDao.create(board);
 		count += 1;
 		boardDao.updateCount(2,count);

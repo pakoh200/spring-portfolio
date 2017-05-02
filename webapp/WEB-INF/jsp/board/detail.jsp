@@ -46,7 +46,7 @@
  						<div class="col-lg-12">
     						<label for="userId">아이디</label>
      						<div class="form-group">
-      							<input type="text" class="form-control" id="exampleInputName" name="userId" value="${board.userId}" readonly>
+      							<input type="text" class="form-control" id="exampleInputName" name="userId" value="${board.name}" readonly>
     						</div>
   						</div>
    						<div class="col-lg-12">
@@ -57,7 +57,7 @@
  						</div>
    						<div class="col-lg-12">
    							<c:choose>
-   							<c:when test="${board.userId eq sessionScope.userId}">
+   							<c:when test="${board.name eq sessionScope.user.name}">
   							<a class="btn btn-default" href="/boards/view" role="button">목록</a>
    							<a class="btn btn-default" href="/boards/${board.num}/form" role="button">수정</a>
   							<a class="btn btn-default" href="/boards/${board.num}/delete" role="button">삭제</a>

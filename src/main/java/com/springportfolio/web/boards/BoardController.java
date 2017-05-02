@@ -16,10 +16,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.springportfolio.dao.boards.BoardDAO;
 import com.springportfolio.dao.boards.BoardService;
+import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.boards.Board;
 import com.springportfolio.domain.users.Authenticate;
+import com.springportfolio.domain.users.User;
 
 @Controller
 @RequestMapping("/boards")
@@ -28,6 +29,9 @@ public class BoardController {
 	
 	@Resource(name="boardService")
 	private BoardService boardService;
+	
+	@Autowired
+	private UserDAO userDao;
 	
 	@RequestMapping("/view")
 	public String view(HttpServletRequest request, Model model){
@@ -92,7 +96,7 @@ public class BoardController {
 	
 	@RequestMapping("/form")
 	public String createForm(HttpSession session, Model model){
-		Object temp = session.getAttribute("userId");
+		Object temp = session.getAttribute("user");
 		if(temp == null){
 			model.addAttribute("authenticate", new Authenticate());
 			model.addAttribute("errorMessage", "로그인하세요.");
@@ -113,13 +117,12 @@ public class BoardController {
 	
 	@RequestMapping("{num}/form")
 	public String updateForm(@PathVariable int num,HttpSession session, Model model){
-		Object object = session.getAttribute("userId");
-		if(object == null){
+		User sesssionedUser = (User)session.getAttribute("user");
+		if(sesssionedUser == null){
 			throw new IllegalArgumentException();
 		}
 		Board board = boardService.selectOne(num);
-		String userId = (String)object;
-		if(!board.matchUserId(userId)){
+		if(!board.matchUserName(sesssionedUser.getName())){
 			throw new IllegalArgumentException();
 		}
 		model.addAttribute("isUpdate", true);
@@ -138,13 +141,12 @@ public class BoardController {
 	
 	@RequestMapping("{num}/delete")
 	public String delete(@PathVariable int num, HttpSession session){
-		Object object = session.getAttribute("userId");
-		if(object == null){
+		User sesssionedUser = (User)session.getAttribute("user");
+		if(sesssionedUser == null){
 			throw new IllegalArgumentException();
 		}
-		String userId = (String)object;
 		Board board = boardService.selectOne(num);
-		if(!board.matchUserId(userId)){
+		if(!board.matchUserName(sesssionedUser.getName())){
 			throw new IllegalArgumentException();
 		}
 		boardService.delete(num);

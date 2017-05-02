@@ -31,7 +31,7 @@ public class BoardTest {
 	
 	@Test
 	public void titleWhenIsEmpty() {
-		Board board = new Board(2, "", "userId", "contents", new java.util.Date(), 0);
+		Board board = new Board(2, "", "name", "contents", new java.util.Date(), 0);
 		Set<ConstraintViolation<Board>> constraintViolations = validator.validate(board);
 		assertThat(constraintViolations.size(), is(2));
 		for (ConstraintViolation<Board> constraintViolation : constraintViolations) {
@@ -40,7 +40,7 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void userIdWhenIsEmpty() {
+	public void nameWhenIsEmpty() {
 		Board board = new Board(2, "title", "", "contents", new java.util.Date(), 0);
 		Set<ConstraintViolation<Board>> constraintViolations = validator.validate(board);
 		assertThat(constraintViolations.size(), is(2));
@@ -51,7 +51,7 @@ public class BoardTest {
 	
 	@Test
 	public void contentsWhenIsEmpty() {
-		Board board = new Board(2, "title", "userId", "", new java.util.Date(), 0);
+		Board board = new Board(2, "title", "name", "", new java.util.Date(), 0);
 		Set<ConstraintViolation<Board>> constraintViolations = validator.validate(board);
 		assertThat(constraintViolations.size(), is(2));
 		for (ConstraintViolation<Board> constraintViolation : constraintViolations) {

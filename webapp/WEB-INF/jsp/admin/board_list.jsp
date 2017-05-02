@@ -64,7 +64,7 @@
                                 <c:forEach var="list" items="${list}">
 									<tr>
 										<td><input type="checkbox" name="checkboxNum" value="${list.num}"></td>
-										<td>${list.num}</td><td><a href="/boards/${list.num}/detail">${list.title}</a></td><td>${list.userId}</td><td><fmt:formatDate value="${list.createDate}" pattern="yyyy.MM.dd HH:mm:ss"/></td><td>${list.count}</td>
+										<td>${list.num}</td><td><a href="/boards/${list.num}/detail">${list.title}</a></td><td>${list.name}</td><td><fmt:formatDate value="${list.createDate}" pattern="yyyy.MM.dd HH:mm:ss"/></td><td>${list.count}</td>
 									</tr>
 								</c:forEach>
                                 </tbody>

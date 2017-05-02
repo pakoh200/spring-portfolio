@@ -18,6 +18,10 @@ $(function(){
 			datatype : "JSON",
 			success:function(data){
 				var skey = $('input[name="title"]').val();
+				if(data.total == 0){
+					var empty = "검색결과없음";
+					$(".panel-body").append(empty);
+				}
 				var pageCount;
 				if(data.display!=10){
 					data.display = 10;
@@ -49,10 +53,10 @@ $(function(){
 				}
 				
 				$.each(data.items, function(key, value){
-					var test = "<div class='col-xs-18 col-md-12'><div class='media'><div class='media-left media-top'><a href='"+data.items[key].link+"'>" +
+					var searchList = "<div class='col-xs-18 col-md-12'><div class='media'><div class='media-left media-top'><a href='"+data.items[key].link+"'>" +
 					"<img class='media-object' src='"+data.items[key].image+"' alt='이미지 없음'></a></div><div class='media-body'><p>제목 : "+data.items[key].title+"</p>" +
 					"<p>제작년도 : "+ data.items[key].pubDate +"</p><p>감독 : "+data.items[key].director+"</p><p>배우 : "+data.items[key].actor+"</p><p>평점 : "+data.items[key].userRating+"</p></div></div></div>";
-					$(".panel-body").append(test);
+					$(".panel-body").append(searchList);
 				});
 			},
 			error:function(e){
@@ -78,6 +82,10 @@ function addSearch(e){
 		datatype : "JSON",
 		success:function(data){
 			var skey = $('input[name="title"]').val();
+			if(data.total == 0){
+				var empty = "검색결과없음";
+				$(".panel-body").append(empty);
+			}
 			var pageCount;
 			if(data.total%data.display == 0){
 				pageCount = data.total/data.display;
@@ -106,10 +114,10 @@ function addSearch(e){
 			}
 			
 			$.each(data.items, function(key, value){
-				var test = "<div class='col-xs-18 col-md-12'><div class='media'><div class='media-left media-top'><a href='"+data.items[key].link+"'>" +
+				var searchList = "<div class='col-xs-18 col-md-12'><div class='media'><div class='media-left media-top'><a href='"+data.items[key].link+"'>" +
 				"<img class='media-object' src='"+data.items[key].image+"' alt='이미지 없음'></a></div><div class='media-body'><p>제목 : "+data.items[key].title+"</p>" +
 				"<p>제작년도 : "+ data.items[key].pubDate +"</p><p>감독 : "+data.items[key].director+"</p><p>배우 : "+data.items[key].actor+"</p><p>평점 : "+data.items[key].userRating+"</p></div></div></div>";
-				$(".panel-body").append(test);
+				$(".panel-body").append(searchList);
 			});
 		},
 		error:function(e){

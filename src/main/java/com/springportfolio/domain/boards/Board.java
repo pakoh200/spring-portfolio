@@ -15,7 +15,7 @@ public class Board {
 
 	@NotEmpty
 	@Size(min = 2, max = 12)
-	private String userId;
+	private String name;
 
 	@NotEmpty
 	@Size(min = 2, max = 300)
@@ -36,25 +36,25 @@ public class Board {
 	public Board() {
 	}
 
-	public Board(int num, String title, String userId, String contents, Date createDate, int count) {
+	public Board(int num, String title, String name, String contents, Date createDate, int count) {
 		this.num = num;
 		this.title = title;
-		this.userId = userId;
+		this.name = name;
 		this.contents = contents;
 		this.createDate = createDate;
 		this.count = count;
 	}
 
-	public Board(String title, String userId, String contents) {
+	public Board(String title, String name, String contents) {
 		this.title = title;
-		this.userId = userId;
+		this.name = name;
 		this.contents = contents;
 	}
 
-	public Board(int num, String title, String userId, String contents) {
+	public Board(int num, String title, String name, String contents) {
 		this.num = num;
 		this.title = title;
-		this.userId = userId;
+		this.name = name;
 		this.contents = contents;
 	}
 
@@ -79,12 +79,12 @@ public class Board {
 		this.title = title;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getname() {
+		return name;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setname(String name) {
+		this.name = name;
 	}
 
 	public String getContents() {
@@ -143,21 +143,20 @@ public class Board {
 		this.sval = sval;
 	}
 
-	public boolean matchUserId(String userId) {
-		if (userId == null) {
+	public boolean matchUserName(String name) {
+		if (name == null) {
 			return false;
 		}
-		return this.userId.equals(userId);
+		return this.name.equals(name);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((contents == null) ? 0 : contents.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + num;
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 
@@ -170,10 +169,10 @@ public class Board {
 		if (getClass() != obj.getClass())
 			return false;
 		Board other = (Board) obj;
-		if (contents == null) {
-			if (other.contents != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!contents.equals(other.contents))
+		} else if (!name.equals(other.name))
 			return false;
 		if (num != other.num)
 			return false;
@@ -182,17 +181,12 @@ public class Board {
 				return false;
 		} else if (!title.equals(other.title))
 			return false;
-		if (userId == null) {
-			if (other.userId != null)
-				return false;
-		} else if (!userId.equals(other.userId))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Board [num=" + num + ", title=" + title + ", userId=" + userId + ", contents=" + contents + ", createDate=" + createDate + ", count="
+		return "Board [num=" + num + ", title=" + title + ", name=" + name + ", contents=" + contents + ", createDate=" + createDate + ", count="
 				+ count + "]";
 	}
 

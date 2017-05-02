@@ -54,10 +54,10 @@
     						</div>
  					 	</div>
   						<div class="col-lg-12">
-    						<label for="userId">아이디</label>
+    						<label for="userId">이름</label>
      						<div class="form-group">
-    						<form:input path="userId" value="${sessionScope.userId}" readonly="true" />
-    						<form:errors path="userId" cssClass="error" />
+    						<form:input path="name" value="${sessionScope.user.name}" readonly="true" />
+    						<form:errors path="name" cssClass="error" />
     						</div>
  						</div>
    						<div class="col-lg-12">

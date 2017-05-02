@@ -88,7 +88,7 @@
 	 	<div class="form-group">
    			<div class="col-sm-offset-2 col-sm-10">
      			<button type="submit" class="btn btn-default">개인정보수정</button>
-     			<a href="/users/${user.userId}/delete" class="btn btn-default" role="button">회원탈퇴</a>
+     			<a href="/users/${user.id}/delete" class="btn btn-default" role="button">회원탈퇴</a>
    			</div>
   		</div>
 	</form:form>

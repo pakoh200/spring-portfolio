@@ -46,26 +46,26 @@ public class AdminController {
 		return "admin/user_list";
 	}
 	
-	@RequestMapping("{userId}/delete")
-	public String delete(@PathVariable String userId, HttpSession session){
-		String sessionUserId = (String)session.getAttribute("userId");
-		User sessionedUser = userDao.findById(sessionUserId);
+	@RequestMapping("{id}/delete")
+	public String delete(@PathVariable Integer id, HttpSession session){
+		User sessionedUser = (User)session.getAttribute("user");
 		if(!sessionedUser.getAuthority().equals("ROLE_ADMIN")){
 			throw new NullPointerException();
 		}
-		userDao.delete(userId);
+		userDao.delete(id);
 		return "redirect:/admin/users";
 	}
 	
-	@RequestMapping(value="{userId}/authority", method=RequestMethod.POST)
-	public String updateAutority(@PathVariable String userId, HttpServletRequest req, HttpSession session){
-		String sessionUserId = (String)session.getAttribute("userId");
-		User sessionedUser = userDao.findById(sessionUserId);
+	@RequestMapping(value="{id}/authority", method=RequestMethod.POST)
+	public String updateAutority(@PathVariable Integer id, HttpServletRequest req, HttpSession session){
+		User sessionedUser = (User)session.getAttribute("user");
 		if(!sessionedUser.getAuthority().equals("ROLE_ADMIN")){
 			throw new NullPointerException();
 		}
 		String authority = req.getParameter("authority");
-		userDao.updateAuthority(authority, userId);		
+		log.debug("authority : {}", authority);
+		userDao.updateAuthority(authority, id);
+		log.debug("User : {}", userDao.findByIntId(id));
 		return "redirect:/admin/users";
 	}
 	
@@ -122,8 +122,7 @@ public class AdminController {
 	
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest req, HttpSession session){
-		String sessionUserId = (String)session.getAttribute("userId");
-		User sessionedUser = userDao.findById(sessionUserId);
+		User sessionedUser = (User)session.getAttribute("user");
 		if(!sessionedUser.getAuthority().equals("ROLE_ADMIN")){
 			throw new NullPointerException();
 		}
