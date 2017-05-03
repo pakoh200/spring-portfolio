@@ -172,7 +172,7 @@ public class UserController {
 		log.debug("error : {}, error_description : {}",error, errorDescription);
 		
 		String clientId = "id";
-		String clientSecret = "password";
+		String clientSecret = "secret";
 		String access_token = null;
 		String refresh_token = null;
 		String token_type = null;

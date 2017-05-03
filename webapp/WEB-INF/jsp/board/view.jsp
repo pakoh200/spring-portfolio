@@ -40,7 +40,7 @@
                 	
                 	<div class="panel-heading">spring + mybatis 게시판</div>
                 	
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="table-responsive">
 							<div class="col-md-8">
 								<form class="form-inline" action="/boards/view">

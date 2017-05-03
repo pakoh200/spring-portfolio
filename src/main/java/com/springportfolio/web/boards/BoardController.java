@@ -9,7 +9,6 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.springportfolio.dao.boards.BoardService;
-import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.boards.Board;
 import com.springportfolio.domain.users.Authenticate;
 import com.springportfolio.domain.users.User;
@@ -29,9 +27,6 @@ public class BoardController {
 	
 	@Resource(name="boardService")
 	private BoardService boardService;
-	
-	@Autowired
-	private UserDAO userDao;
 	
 	@RequestMapping("/view")
 	public String view(HttpServletRequest request, Model model){
