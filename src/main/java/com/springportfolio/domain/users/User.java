@@ -99,15 +99,22 @@ public class User {
 		return authenticate.matchPassword(this.password);
 	}
 
-	public boolean matchUserId(String newUserId) {
-		if (newUserId == null) {
+//	public boolean matchUserId(String newUserId) {
+//		if (newUserId == null) {
+//			return false;
+//		}
+//		return newUserId.equals(this.userId);
+//	}
+
+	public boolean matchId(Integer id) {
+		if(id == null){
 			return false;
 		}
-		return newUserId.equals(this.userId);
+		return id.equals(this.id);
 	}
 
 	public User update(User updateUser) {
-		if (!matchUserId(updateUser.getUserId())) {
+		if (!matchId(updateUser.getId())) {
 			throw new IllegalArgumentException();
 		}
 		return new User(this.id, this.userId, updateUser.password, updateUser.name, updateUser.email, updateUser.authority);
@@ -163,5 +170,6 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", userId=" + userId + ", name=" + name + ", email=" + email + ", authority=" + authority + "]";
 	}
+
 
 }

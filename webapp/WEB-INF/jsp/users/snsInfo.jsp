@@ -50,23 +50,7 @@
                                 <h3 class="panel-title"><i class="glyphicon glyphicon-user"></i> 회원정보</h3>
                             </div>
                             <div class="panel-body">
-                            	<form:form modelAttribute="user" cssClass="form-horizontal" action="/users" method="put">
-                            	<input type="hidden" name="id" value="${user.id}">
-                            	<input type="hidden" name="authority" value="${user.authority}">
-		<div class="form-group">
-    		<label for="userId" class="col-sm-2 control-label">User Id</label>
-    		<div class="col-sm-6">
-    			<form:input path="userId"/>
-    			<form:errors path="userId" cssClass="error"/>
-    		</div>
-  		</div>
- 		<div class="form-group">
-    		<label for="Password" class="col-sm-2 control-label">Password</label>
-    		<div class="col-sm-6">
-    			<form:password path="password"/>
-    			<form:errors path="password" cssClass="error"/>
-    		</div>
-  		</div>
+                            	<form:form modelAttribute="sns" cssClass="form-horizontal" action="/users/updateSnsUser" method="get">
   		<div class="form-group">
     		<label for="Name" class="col-sm-2 control-label">Name</label>
     		<div class="col-sm-6">
@@ -81,6 +65,7 @@
     			<form:errors path="email" cssClass="error"/>
     		</div>
   		</div>
+  		<input type="hidden" name="id" value="${user.id}">
 	 	<div class="form-group">
    			<div class="col-sm-offset-2 col-sm-10">
      			<button type="submit" class="btn btn-default">개인정보수정</button>

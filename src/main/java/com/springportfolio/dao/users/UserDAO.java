@@ -20,6 +20,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+import com.springportfolio.domain.users.Sns;
 import com.springportfolio.domain.users.User;
 import com.springportfolio.naver.SnsUser;
 
@@ -54,10 +55,10 @@ public class UserDAO extends JdbcDaoSupport {
 		String sql = "insert into USERS(userId, password, name, email, authority) values(?, ?, ?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		getJdbcTemplate().update(new PreparedStatementCreator() {
-			
+
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement ps = con.prepareStatement(sql, new String[]{"id"});
+				PreparedStatement ps = con.prepareStatement(sql, new String[] { "id" });
 				ps.setString(1, user.getUserId());
 				ps.setString(2, user.getPassword());
 				ps.setString(3, user.getName());
@@ -70,8 +71,13 @@ public class UserDAO extends JdbcDaoSupport {
 	}
 
 	public void update(User user) {
-		String sql = "update USERS set password = ?, name = ?, email = ?, authority = ? where userId = ?";
-		getJdbcTemplate().update(sql, user.getPassword(), user.getName(), user.getEmail(), user.getAuthority(), user.getUserId());
+		String sql = "update USERS set userId = ?, password = ?, name = ?, email = ?, authority = ? where id = ?";
+		getJdbcTemplate().update(sql, user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), user.getAuthority(), user.getId());
+	}
+
+	public void updateSnsUser(Sns sns) {
+		String sql = "update USERS set name = ?, email = ? where id = ?";
+		getJdbcTemplate().update(sql, sns.getName(), sns.getEmail(), sns.getId());
 	}
 
 	public List<User> selectAll() {
@@ -131,6 +137,26 @@ public class UserDAO extends JdbcDaoSupport {
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
+	}
+
+	public SnsUser findBySnsIntId(int id) {
+		String sql = "select * from SNS_INFO where id = ?";
+		RowMapper<SnsUser> rowMapper = new RowMapper<SnsUser>() {
+			@Override
+			public SnsUser mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new SnsUser(rs.getInt("id"), rs.getString("sns_id"), rs.getString("sns_type"), rs.getString("sns_name"));
+			}
+		};
+		try {
+			return getJdbcTemplate().queryForObject(sql, rowMapper, id);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+
+	public void deleteSnsUser(int id) {
+		String sql = "delete from SNS_INFO where id = ?";
+		getJdbcTemplate().update(sql, id);
 	}
 
 }

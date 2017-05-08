@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.users.Authenticate;
+import com.springportfolio.domain.users.Sns;
 import com.springportfolio.domain.users.User;
 import com.springportfolio.naver.NaverUser;
 import com.springportfolio.naver.SnsUser;
@@ -31,20 +32,20 @@ import com.springportfolio.support.Utils;
 @RequestMapping("/users")
 public class UserController {
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
-	
+
 	@Autowired
 	private UserDAO userDao;
-	
+
 	@RequestMapping("/form")
-	public String createForm(Model model){
+	public String createForm(Model model) {
 		model.addAttribute("user", new User());
 		return "users/form";
 	}
-	
-	@RequestMapping(value="", method=RequestMethod.POST)
-	public String create(@Valid User user, BindingResult bindingResult, Model model){
+
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public String create(@Valid User user, BindingResult bindingResult, Model model) {
 		log.debug("User : {}", user);
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			log.debug("Binding Result has Error!");
 			List<ObjectError> errors = bindingResult.getAllErrors();
 			for (ObjectError error : errors) {
@@ -53,124 +54,163 @@ public class UserController {
 			return "users/form";
 		}
 		User dbUser = userDao.findById(user.getUserId());
-		if(dbUser != null){
+		if (dbUser != null) {
 			model.addAttribute("errorMessage", "존재하는 아이디입니다.");
 			return "users/form";
 		}
-		if(user.getUserId().equals("admin")){
+		if (user.getUserId().equals("admin")) {
 			user.setAuthority("ROLE_ADMIN");
 		}
 		userDao.create(user);
 		log.debug("databaseUser : {}", userDao.findById(user.getUserId()));
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping("{id}/info")
-	public String updateForm(@PathVariable Integer id, Model model){
+	public String updateForm(@PathVariable Integer id, Model model) {
 		log.debug("id : {}", id);
-		if(id == null){
+		if (id == null) {
 			throw new IllegalArgumentException("사용자 아이디가 필요합니다.");
 		}
 		User user = userDao.findByIntId(id);
 		log.debug("User : {}", user);
-		model.addAttribute("user", user);
-		return "users/info";
+		if (user.getUserId() != null) {
+			model.addAttribute("user", user);
+			return "users/info";
+		} else {
+			model.addAttribute("sns", user);
+			return "users/snsInfo";
+		}
 	}
-	
-	@RequestMapping(value="", method=RequestMethod.PUT)
-	public String update(@Valid User user, BindingResult bindingResult, HttpSession session, Model model){
+
+	@RequestMapping(value = "", method = RequestMethod.PUT)
+	public String update(@Valid User user, BindingResult bindingResult, HttpSession session, Model model) {
 		log.debug("User : {}", user);
-		if(bindingResult.hasErrors()){
+		if (bindingResult.hasErrors()) {
 			log.debug("Binding Result has Error!");
 			List<ObjectError> errors = bindingResult.getAllErrors();
 			for (ObjectError error : errors) {
 				log.debug("error : {},{}", error.getCode(), error.getDefaultMessage());
 			}
-			return "users/form";
+			return "users/info";
 		}
 		Object temp = session.getAttribute("user");
-		if(temp == null){
+		if (temp == null) {
 			throw new NullPointerException();
 		}
-		User sessionedUser = (User)temp;
-		if(!user.matchUserId(sessionedUser.getUserId())){
+		User sessionedUser = (User) temp;
+		if(!sessionedUser.matchId(user.getId())){
 			throw new NullPointerException();
 		}
-		
 		userDao.update(user);
-		log.debug("databaseUser : {}", userDao.findById(user.getUserId()));
+		session.removeAttribute("user");
+		session.setAttribute("user", user);
+		log.debug("databaseUser : {}", userDao.findByIntId(user.getId()));
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value = "updateSnsUser")
+	public String updateSns(@Valid Sns sns, BindingResult bindingResult, HttpSession session, Model model) {
+		log.debug("Sns : {}", sns);
+		if (bindingResult.hasErrors()) {
+			log.debug("Binding Result has Error!");
+			List<ObjectError> errors = bindingResult.getAllErrors();
+			for (ObjectError error : errors) {
+				log.debug("error : {},{}", error.getCode(), error.getDefaultMessage());
+			}
+			return "users/snsInfo";
+		}
+		Object temp = session.getAttribute("user");
+		if (temp == null) {
+			throw new NullPointerException();
+		}
+		User sessionedUser = (User) temp;
+		if(!sessionedUser.matchId(sns.getId())){
+			throw new NullPointerException();
+		}
+		
+		userDao.updateSnsUser(sns);
+		User user = userDao.findByIntId(sns.getId());
+		
+		session.removeAttribute("user");
+		session.setAttribute("user", user);
+		log.debug("databaseUser : {}", userDao.findByIntId(sns.getId()));
+		return "redirect:/";
+	}
+
 	@RequestMapping("/login/form")
-	public String loginForm(Model model){
+	public String loginForm(Model model) {
 		model.addAttribute("authenticate", new Authenticate());
 		return "users/login";
 	}
-	
+
 	@RequestMapping("/login")
-	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, HttpSession session, Model model){
-		if(bindingResult.hasErrors()){
+	public String login(@Valid Authenticate authenticate, BindingResult bindingResult, HttpSession session, Model model) {
+		if (bindingResult.hasErrors()) {
 			return "users/login";
 		}
 		User user = userDao.findById(authenticate.getUserId());
-		if(user == null){
+		if (user == null) {
 			model.addAttribute("errorMessage", "존재하지 않는 사용자입니다.");
 			return "users/login";
 		}
-		if(!user.matchPassword(authenticate)){
+		if (!user.matchPassword(authenticate)) {
 			model.addAttribute("errorMessage", "비밀번호가 틀립니다.");
 			return "users/login";
 		}
 		log.debug("User : {}", user);
-		
+
 		session.setAttribute("user", user);
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping("/logout")
-	public String logout(HttpSession session){
+	public String logout(HttpSession session) {
 		session.removeAttribute("user");
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping("{id}/delete")
-	public String delete(@PathVariable Integer id, HttpSession session){
-		if(id == null){
+	public String delete(@PathVariable Integer id, HttpSession session) {
+		if (id == null) {
 			throw new IllegalArgumentException("사용자 아이디가 필요합니다.");
 		}
 		Object temp = session.getAttribute("user");
-		User sessionedUser = (User)temp;
-		if(sessionedUser.getId() != id){
+		User sessionedUser = (User) temp;
+		if(!sessionedUser.matchId(id)){
 			throw new NullPointerException();
 		}
-		User user = userDao.findByIntId(id);
-		userDao.delete(user.getId());
+		SnsUser dbSnsUser = userDao.findBySnsIntId(id);
+		if(dbSnsUser != null){
+			userDao.deleteSnsUser(id);
+		}
+		userDao.delete(id);
 		return "redirect:/users/logout";
 	}
-	
+
 	@RequestMapping(value = "/naverLogin")
 	public String naverLogin(HttpSession session) {
 		String mydomain = "http%3A%2F%2F127.0.0.1%3A8080%2Fusers%2Fcallback";
 		String clientId = "id";
-		String requestUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri="
-				+ mydomain + "&state=";
+		String requestUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + mydomain
+				+ "&state=";
 		String state = Utils.generateState(); // 토큰을 생성합니다.
 		session.setAttribute("state", state); // 세션에 토큰을 저장합니다.
 		return "redirect:" + requestUrl + state; // 만들어진 URL로 인증을 요청합니다.
 	}
 
 	@RequestMapping("/callback")
-	public String callback(@RequestParam String state, @RequestParam String code, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
+	public String callback(@RequestParam String state, @RequestParam String code, HttpServletRequest request, HttpSession session)
+			throws UnsupportedEncodingException {
 		String storedState = (String) request.getSession().getAttribute("state");
 		if (!state.equals(storedState)) {
 			return "redirect:/";
 		}
-		
+
 		String error = request.getParameter("error");
 		String errorDescription = request.getParameter("error_description");
-		log.debug("error : {}, error_description : {}",error, errorDescription);
-		
+		log.debug("error : {}, error_description : {}", error, errorDescription);
+
 		String clientId = "id";
 		String clientSecret = "secret";
 		String access_token = null;
@@ -179,20 +219,19 @@ public class UserController {
 
 		String accessUrl = "https://nid.naver.com/oauth2.0/token?client_id=" + clientId + "&client_secret=" + clientSecret
 				+ "&grant_type=authorization_code" + "&state=" + state + "&code=" + code;
-		
+
 		String tokens = Utils.getJson(accessUrl, null);
 		Token token = Utils.getToken(tokens);
 		access_token = token.getAccess_token();
 		token_type = token.getToken_type();
-		
 
 		String naverUserUrl = "https://openapi.naver.com/v1/nid/me";
-		
+
 		String naver = Utils.getJson(naverUserUrl, token_type + " " + access_token);
 		NaverUser naverUser = Utils.getNaverUser(naver);
 		SnsUser snsUser = new SnsUser(naverUser);
 		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
-		if(dbSnsUser == null){
+		if (dbSnsUser == null) {
 			int id = userDao.create(snsUser);
 			snsUser.setId(id);
 			userDao.createSnsUser(snsUser);
@@ -200,7 +239,7 @@ public class UserController {
 		}
 		User user = userDao.findByIntId(dbSnsUser.getId());
 		session.setAttribute("user", user);
-		
+
 		return "redirect:/";
 	}
 }

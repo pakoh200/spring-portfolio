@@ -22,6 +22,7 @@ import com.springportfolio.dao.boards.BoardService;
 import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.boards.Board;
 import com.springportfolio.domain.users.User;
+import com.springportfolio.naver.SnsUser;
 
 @Controller
 @RequestMapping("/admin")
@@ -48,9 +49,14 @@ public class AdminController {
 	
 	@RequestMapping("{id}/delete")
 	public String delete(@PathVariable Integer id, HttpSession session){
+		log.debug("id : {}", id);
 		User sessionedUser = (User)session.getAttribute("user");
 		if(!sessionedUser.getAuthority().equals("ROLE_ADMIN")){
 			throw new NullPointerException();
+		}
+		SnsUser dbSnsUser = userDao.findBySnsIntId(id);
+		if(dbSnsUser != null){
+			userDao.deleteSnsUser(id);
 		}
 		userDao.delete(id);
 		return "redirect:/admin/users";
