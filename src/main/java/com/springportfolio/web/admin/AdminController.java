@@ -36,7 +36,11 @@ public class AdminController {
 	private BoardService boardService;
 	
 	@RequestMapping("/main")
-	public String main(){
+	public String main(HttpSession session){
+//		User user = (User)session.getAttribute("user");
+//		if(user == null || !user.matchAuthority("ROLE_ADMIN")){
+//			throw new IllegalArgumentException("접근 권한이 없습니다.");
+//		}
 		return "admin/main";
 	}
 	

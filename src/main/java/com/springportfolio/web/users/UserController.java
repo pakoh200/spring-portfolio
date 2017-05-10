@@ -190,7 +190,7 @@ public class UserController {
 
 	@RequestMapping(value = "/naverLogin")
 	public String naverLogin(HttpSession session) {
-		String mydomain = "http%3A%2F%2F127.0.0.1%3A8080%2Fusers%2Fcallback";
+		String mydomain = "https%3A%2F%2Fphcworld.com%3A42146%2Fusers%2Fcallback";
 		String clientId = "id";
 		String requestUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + mydomain
 				+ "&state=";

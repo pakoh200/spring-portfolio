@@ -120,6 +120,13 @@ public class User {
 		return new User(this.id, this.userId, updateUser.password, updateUser.name, updateUser.email, updateUser.authority);
 	}
 
+	public boolean matchAuthority(String authority) {
+		if(authority == null){
+			return false;
+		}
+		return this.authority.equals(authority);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -170,6 +177,7 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", userId=" + userId + ", name=" + name + ", email=" + email + ", authority=" + authority + "]";
 	}
+
 
 
 }

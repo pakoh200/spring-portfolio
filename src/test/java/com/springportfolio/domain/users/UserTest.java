@@ -60,4 +60,11 @@ public class UserTest {
 		User updatedUser = user.update(updateUser);
 		assertThat(updatedUser, is(updatedUser));
 	}
+	
+	@Test
+	public void testName() throws Exception {
+		User user = new User("userId", "password","name", "email@test.test", "ROLE_USER");
+		User matchUser = new User("userId", "password","name", "email@test.test", "ROLE_ADMIN");
+		assertFalse(user.matchAuthority(matchUser.getAuthority()));
+	}
 }
