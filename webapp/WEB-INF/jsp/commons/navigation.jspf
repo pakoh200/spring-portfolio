@@ -55,7 +55,7 @@
                         <a href="/api/movie/view"><i class="glyphicon glyphicon-film"></i> 네이버 오픈 api 영화 검색</a>
                     </li>
                     <li>
-                        <a href="/admin/main"><i class="glyphicon glyphicon-wrench"></i> 관린자 메뉴</a>
+                        <a href="/admin/main"><i class="glyphicon glyphicon-wrench"></i> 관리자 메뉴</a>
                     </li>
                 </ul>
             </div>

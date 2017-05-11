@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
 
@@ -111,6 +111,7 @@
                         	<li>검색어를 입력하면 검색어가 포함된 제목들의 영화 정보가 개봉날짜 순으로 검색됩니다.</li>
                         	<li>이미지를 클릭했을시에 해당 영화의 네이버 영화페이지로 이동됩니다.</li>
                         	<li>네이버 영화 검색도 요청시 JSON형식으로 정보가 넘어오지만 파싱하지 않고 AJAX를 이용하여 페이지 바로 뿌려주는 방법으로 구현했습니다.</li>
+                        	<li>AJAX구동은 scripts.js파일에 있습니다.</li>
                         </ol>
                         <br>                        
                         <h3>●호스팅</h3>
