@@ -47,7 +47,7 @@
 									<label for="search">검색</label>
 									<select class="form-control" name="skey">
   										<option value="title">제목</option>
-  										<option value="userId">아이디</option>
+  										<option value="name">이름</option>
 									</select>
   									<div class="form-group">
   				  						<input type="text" class="form-control" id="search" name="sval" placeholder="검색">
