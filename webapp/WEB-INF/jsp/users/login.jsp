@@ -12,7 +12,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>로그인페이지</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/stylesheets/css/bootstrap.min.css" rel="stylesheet">
@@ -41,11 +41,6 @@
         	<input type="text" id="userId" name="userId" class="form-control" placeholder="ID" required autofocus>
         <label for="inputPassword" class="sr-only">비밀번호</label>
         	<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
   		<c:if test="${not empty errorMessage}">
 		<div class="alert alert-danger" role="alert">
   			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -56,7 +51,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
         <a href="/users/naverLogin"><img src="/stylesheets/image/naver_login_Green.PNG" width="300" height="55"></a>
       <div class="form-signin" align="center">
-      <span class="col-sm-4"><a href="/users/form">회원가입</a></span><span class="col-sm-6 col-sm-offset-2"><a href="#">비밀번호 찾기</a></span>
+      <span class="col-sm-4"><a href="/users/form">회원가입</a></span><span class="col-sm-6 col-sm-offset-2"></span>
       </div>
       </form>
 

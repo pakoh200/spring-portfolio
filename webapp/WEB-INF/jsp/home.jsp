@@ -78,8 +78,8 @@
                         <br>
                         <h3>●회원정보 수정</h3>
                         <ol>
-                        	<li>화면 상단에 로그인시 메뉴가 바뀌며 Profile 또는 왼쪽 메뉴에 회원정보를 클릭하면 해당 페이지로 이동합니다.</li>
-                        	<li>로그인을 해야만 session이 저장되기 때문에 저장된 session이 없으면 exception페이지로 이동합니다.(없는 주소로 나옴)</li>
+                        	<li>화면 상단에 로그인시 메뉴가 바뀌며 Profile 버튼을 클릭하면 해당 페이지로 이동합니다.</li>
+                        	<li>로그인을 해야만 session이 저장되기 때문에 저장된 session이 없으면 exception페이지로 이동합니다.(@PathVariable은 null값을 처리하지 않는다. RequestParam으로 처리하기보단 삭제를 택했다.)</li>
                         	<li>혹시 다른아이디를 주소에 입력하여 이동하고 수정을 요청하면 저장된 session값과 다를경우 exception페이지로 이동합니다.</li>
                         	<li>수정이 완료될 경우 session값이 바뀌기때문에 기존 session값을 지우고 수정된 값을 session에 저장합니다.</li>
                         	<li>기존 회원들의 정보를 수정할 때 아이디와 비밀번호가 꼭 필요하기때문에 hibernate validation을 살리기위해 SNS이용자와 분리하여 수정 요청 주소를 달리했습니다.</li>
@@ -138,13 +138,6 @@
                         	<li>home리다이렉트가 아닐경우 http로 리다이렉트 되기 때문에 https주소를 추가하였습니다.</li>
                         </ol>
                         <br>     
-                        <h2>※추가</h2>
-                        <ol>
-                        	<li>아이디 비밀번호 저장하여 사용하기</li>
-                        	<li>비밀번호 찾기</li>
-                        	<li>spring-security</li>
-                        	<li>구글, 페이스북, 카카오 아이디 연동하기</li>
-                        </ol>
                         <br>   
                     </div>
                 </div>
