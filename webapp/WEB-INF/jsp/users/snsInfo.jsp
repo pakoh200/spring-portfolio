@@ -5,7 +5,7 @@
 <html lang="ko">
 
 <head>
-
+	<title>개인정보수정</title>
     <%@ include file="../commons/header.jspf" %>
 
 </head>

@@ -4,7 +4,7 @@
 <html lang="ko">
 
 <head>
-
+	<title>회원관리</title>
     <%@ include file="../commons/header.jspf" %>
 
 </head>

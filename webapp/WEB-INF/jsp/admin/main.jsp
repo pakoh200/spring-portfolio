@@ -4,7 +4,7 @@
 <html lang="ko">
 
 <head>
-
+	<title>관리자 페이지</title>
     <%@ include file="../commons/header.jspf" %>
 
 </head>
@@ -27,7 +27,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="glyphicon glyphicon-home"></i> admin
+                                <i class="glyphicon glyphicon-wrench"></i> admin
                             </li>
                         </ol>
                     </div>

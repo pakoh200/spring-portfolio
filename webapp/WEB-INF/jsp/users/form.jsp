@@ -5,7 +5,7 @@
 <html lang="ko">
 
 <head>
-
+	<title>회원가입</title>
     <%@ include file="../commons/header.jspf" %>
 
 </head>

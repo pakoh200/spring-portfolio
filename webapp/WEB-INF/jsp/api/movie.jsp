@@ -4,7 +4,7 @@
 <html lang="ko">
 
 <head>
-
+	<title>영화검색</title>
     <%@ include file="../commons/header.jspf" %>
     <script type="text/javascript" src="/stylesheets/js/jquery.js"></script>
     <script src="/stylesheets/js/scripts.js"></script>

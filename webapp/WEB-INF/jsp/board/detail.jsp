@@ -5,7 +5,7 @@
 <html lang="ko">
 
 <head>
-
+	<title>게시판 보기</title>
     <%@ include file="../commons/header.jspf" %>
 
 </head>
@@ -24,11 +24,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            게시판 <small>Board</small>
+                            게시판 보기 <small>Board Read</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="glyphicon glyphicon-list-alt"></i> Board
+                                <i class="glyphicon glyphicon-eye-open"></i> Board Read
                             </li>
                         </ol>
                     </div>

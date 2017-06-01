@@ -6,7 +6,7 @@
 <html lang="ko">
 
 <head>
-
+	<title>게시판</title>
     <%@ include file="../commons/header.jspf" %>
 
 </head>

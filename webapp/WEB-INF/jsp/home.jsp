@@ -5,7 +5,6 @@
 
 <head>
 
-
     <%@ include file="./commons/header.jspf" %>
 
 </head>

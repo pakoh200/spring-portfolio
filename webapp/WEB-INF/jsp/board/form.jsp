@@ -6,7 +6,7 @@
 <html lang="ko">
 
 <head>
-
+	<title>게시판 글 쓰기</title>
     <%@ include file="../commons/header.jspf" %>
 
 </head>
@@ -33,11 +33,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            게시판 <small>Board</small>
+                            게시판 글 쓰기 <small>Board Write</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="glyphicon glyphicon-list-alt"></i> Board
+                                <i class="glyphicon glyphicon-pencil"></i> Board Write
                             </li>
                         </ol>
                     </div>
