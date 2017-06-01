@@ -44,7 +44,12 @@ $(function(){
 					$("#search_pagination").append(previous);
 				}
 				for(var i = startPage; i < endPage+1; i++){
-					var pageNation = "<li><a href='/api/movie?title="+skey+"&pnum="+i+"'>"+i+"</a></li>"
+					console.log(currentPage);
+					if(i==currentPage){
+						var pageNation = "<li class='active'><a href='/api/movie?title="+skey+"&pnum="+i+"'>"+i+"</a></li>"
+					} else{
+						var pageNation = "<li><a href='/api/movie?title="+skey+"&pnum="+i+"'>"+i+"</a></li>"
+					}
 					$("#search_pagination").append(pageNation);
 				}
 				if(endPage < pageCount){
@@ -53,7 +58,7 @@ $(function(){
 				}
 				
 				$.each(data.items, function(key, value){
-					var searchList = "<div class='col-xs-18 col-md-12'><div class='media'><div class='media-left media-top'><a href='"+data.items[key].link+"'>" +
+					var searchList = "<div class='col-xs-18 col-md-12'><div class='media'><div class='media-left media-top'><a href='"+data.items[key].link+"' target='_blank'>" +
 					"<img class='media-object' src='"+data.items[key].image+"' alt='이미지 없음'></a></div><div class='media-body'><p>제목 : "+data.items[key].title+"</p>" +
 					"<p>제작년도 : "+ data.items[key].pubDate +"</p><p>감독 : "+data.items[key].director+"</p><p>배우 : "+data.items[key].actor+"</p><p>평점 : "+data.items[key].userRating+"</p></div></div></div>";
 					$(".panel-body").append(searchList);
@@ -105,7 +110,12 @@ function addSearch(e){
 				$("#search_pagination").append(previous);
 			}
 			for(var i = startPage; i < endPage+1; i++){
-				var pageNation = "<li><a href='/api/movie?title="+skey+"&pnum="+i+"'>"+i+"</a></li>"
+				console.log("currentPage : "+currentPage);
+				if(i==currentPage){
+					var pageNation = "<li class='active'><a href='/api/movie?title="+skey+"&pnum="+i+"'>"+i+"</a></li>"
+				} else{
+					var pageNation = "<li><a href='/api/movie?title="+skey+"&pnum="+i+"'>"+i+"</a></li>"
+				}
 				$("#search_pagination").append(pageNation);
 			}
 			if(endPage < pageCount){
@@ -114,7 +124,7 @@ function addSearch(e){
 			}
 			
 			$.each(data.items, function(key, value){
-				var searchList = "<div class='col-xs-18 col-md-12'><div class='media'><div class='media-left media-top'><a href='"+data.items[key].link+"'>" +
+				var searchList = "<div class='col-xs-18 col-md-12'><div class='media'><div class='media-left media-top'><a href='"+data.items[key].link+"' target='_blank'>" +
 				"<img class='media-object' src='"+data.items[key].image+"' alt='이미지 없음'></a></div><div class='media-body'><p>제목 : "+data.items[key].title+"</p>" +
 				"<p>제작년도 : "+ data.items[key].pubDate +"</p><p>감독 : "+data.items[key].director+"</p><p>배우 : "+data.items[key].actor+"</p><p>평점 : "+data.items[key].userRating+"</p></div></div></div>";
 				$(".panel-body").append(searchList);
