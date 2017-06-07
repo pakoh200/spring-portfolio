@@ -56,7 +56,7 @@
 		<div class="form-group">
     		<label for="userId" class="col-sm-2 control-label">User Id</label>
     		<div class="col-sm-6">
-    			<form:input path="userId"/>
+    			<form:input path="userId" readonly="true"/>
     			<form:errors path="userId" cssClass="error"/>
     		</div>
   		</div>

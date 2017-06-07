@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="ko">
   <head>
@@ -35,12 +36,14 @@
 
     <div class="container">
 
-	<form class="form-signin" action="/users/login" method="post">
+	<form:form modelAttribute="authenticate" cssClass="form-signin" action="/users/login" method="post">
         <h2 class="form-signin-heading">로그인</h2>
         <label for="inputUserId" class="sr-only">아이디</label>
         	<input type="text" id="userId" name="userId" class="form-control" placeholder="ID" required autofocus>
+        	<form:errors path="userId" cssClass="error"/>
         <label for="inputPassword" class="sr-only">비밀번호</label>
         	<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+        	<form:errors path="password" cssClass="error"/>
   		<c:if test="${not empty errorMessage}">
 		<div class="alert alert-danger" role="alert">
   			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -53,7 +56,7 @@
       <div class="form-signin" align="center">
       <span class="col-sm-4"><a href="/users/form">회원가입</a></span><span class="col-sm-6 col-sm-offset-2"></span>
       </div>
-      </form>
+      </form:form>
 
     </div> <!-- /container -->
 
