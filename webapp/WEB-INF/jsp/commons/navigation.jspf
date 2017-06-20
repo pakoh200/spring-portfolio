@@ -42,17 +42,7 @@
                     <li>
                         <a href="/"><i class="glyphicon glyphicon-home"></i> Main</a>
                     </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                        </ul>
-                    </li>
+                    
                     <li>
                         <a href="/boards/view"><i class="glyphicon glyphicon-list-alt"></i> 게시판</a>
                     </li>
