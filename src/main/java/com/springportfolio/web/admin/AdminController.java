@@ -30,7 +30,7 @@ public class AdminController {
 	private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 	
 	@Autowired
-	UserDAO userDao;
+	private UserDAO userDao;
 	
 	@Resource(name="boardService")
 	private BoardService boardService;

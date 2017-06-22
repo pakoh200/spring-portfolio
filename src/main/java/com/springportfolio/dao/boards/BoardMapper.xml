@@ -4,14 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="BoardMapper">
 	<select id="select" resultType="com.springportfolio.domain.boards.Board">
-		select * from (select rownum rn, num, title, name, contents, createDate, count from (select * from BOARDS where ${skey} like '%'||#{sval}||'%' order by createDate desc) BOARDS) 
+		select * from (select rownum rn, num, title, name, contents, createDate, count from (select * from BOARDS where ${skey} like '%'||#{sval}||'%' order by createDate desc, num desc) BOARDS) 
 		where rn between #{start} and #{end}
 	</select>
-	
+		
 	<select id="selectCount" resultType="int">
 		select count(*) from BOARDS where ${skey} like '%'||#{sval}||'%'
 	</select>
-	
+		
 	<insert id="createBoard" useGeneratedKeys="true" keyProperty="num" parameterType="com.springportfolio.domain.boards.Board">
 		insert into BOARDS(title, name, contents, createDate, count)
 		values(#{title}, #{name}, #{contents}, CURRENT_TIMESTAMP(), 0)

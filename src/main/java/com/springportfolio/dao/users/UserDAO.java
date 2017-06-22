@@ -6,17 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -25,16 +18,7 @@ import com.springportfolio.domain.users.User;
 import com.springportfolio.naver.SnsUser;
 
 public class UserDAO extends JdbcDaoSupport {
-	private static final Logger log = LoggerFactory.getLogger(UserDAO.class);
-
-	@PostConstruct
-	public void initialize() {
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource("import.sql"));
-		DatabasePopulatorUtils.execute(populator, getDataSource());
-		log.debug("database setting success!");
-	}
-
+	
 	public User findById(String userId) {
 		String sql = "select * from USERS where userId = ?";
 		RowMapper<User> rowMapper = new RowMapper<User>() {

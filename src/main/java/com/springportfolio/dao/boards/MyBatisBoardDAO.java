@@ -21,25 +21,11 @@ public class MyBatisBoardDAO implements BoardDAO {
 	private static final Logger log = LoggerFactory.getLogger(MyBatisBoardDAO.class);
 	@Autowired
 	private SqlSession sqlSession;
-	@Autowired
-	private DataSource dataSource;
 	
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 	
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-	
-	@PostConstruct
-	public void initialize(){
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(new ClassPathResource("import.sql"));
-		DatabasePopulatorUtils.execute(populator,dataSource);
-		log.info("database initialized success!");
-	}
-
 	@Override
 	public List<Board> select(String skey, String sval, int start, int end) {
 		Board board = new Board();
@@ -47,6 +33,8 @@ public class MyBatisBoardDAO implements BoardDAO {
 		board.setSval(sval);
 		board.setStart(start);
 		board.setEnd(end);
+		log.debug("board : {}", board);
+		log.debug("skey : {}, sval : {}", board.getSkey(), board.getSval());
 		return sqlSession.selectList("BoardMapper.select", board);
 	}
 
@@ -80,6 +68,7 @@ public class MyBatisBoardDAO implements BoardDAO {
 		Board board = new Board();
 		board.setSkey(skey);
 		board.setSval(sval);
+		log.debug("board : {}", board);
 		return sqlSession.selectOne("BoardMapper.selectCount", board);
 	}
 	
