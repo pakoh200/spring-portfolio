@@ -95,7 +95,6 @@ function saveContent() {
 			alert('내용을 입력하세요');
 			return false;
 		}
-
 		return true;
 	}
 

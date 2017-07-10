@@ -49,7 +49,7 @@
                 <!-- /.row -->
 
                 <div class="row">
-                	<form:form modelAttribute="board" cssClass="form-group" id="form-group" action="${actionUrl}" method="get">
+                	<form:form modelAttribute="board" cssClass="form-group" id="form-group" action="${actionUrl}" method="get" accept-charset="utf-8">
   						<div class="col-lg-12">
     						<label for="title">제목</label>
      						<div class="form-group">
@@ -71,6 +71,7 @@
      							<textarea id="sample_contents_source" style="display:none;">
 									${board.contents}
 								</textarea>
+    						<form:errors path="contents" cssClass="error" />
   							</div>
   						</div>
    						<div class="col-lg-12">
