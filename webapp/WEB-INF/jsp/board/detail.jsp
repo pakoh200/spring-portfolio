@@ -52,7 +52,9 @@
    						<div class="col-lg-12">
   							<label for="contents">내용</label>
   							<div class="form-group">
-  								<textarea class="form-control" rows="9" name="contents" readonly>${board.contents}</textarea>
+  								<div class="well" style="line-height:2.8em; width:100%;">
+  								${board.contents}
+  								</div>
   							</div>
  						</div>
    						<div class="col-lg-12">
