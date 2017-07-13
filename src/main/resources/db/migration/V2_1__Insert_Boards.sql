@@ -20,3 +20,4 @@ insert into BOARDS(title, name, contents, createDate, count)
 values('1010','name', '101010101010', CURRENT_TIMESTAMP(), 0);
 insert into BOARDS(title, name, contents, createDate, count)
 values('1111','name', '11111111111', CURRENT_TIMESTAMP(), 0);
+

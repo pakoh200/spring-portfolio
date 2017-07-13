@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS BOARDS;
 
 CREATE TABLE BOARDS(
 num int(11) not null auto_increment,
@@ -8,3 +7,4 @@ contents varchar(300) not null,
 createDate timestamp,
 count int not null,
 primary key(num));
+

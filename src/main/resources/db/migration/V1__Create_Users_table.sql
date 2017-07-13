@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS USERS;
 
 CREATE TABLE USERS(
 id int(11) not null auto_increment,

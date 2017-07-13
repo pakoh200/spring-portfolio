@@ -4,7 +4,7 @@
 <comment>application-properties</comment>
 
 <entry key="database.driverClassName">org.h2.Driver</entry>
-<entry key="database.url">jdbc:h2:~/spring-portfolio</entry>
+<entry key="database.url">jdbc:h2:~/Spring-portfolio</entry>
 <entry key="database.username">sa</entry>
 <entry key="database.password"></entry>
 </properties>
