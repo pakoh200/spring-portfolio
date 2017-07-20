@@ -40,8 +40,13 @@ public class BoardService implements BoardDAO {
 	}
 
 	@Override
-	public void updateCount(int i, int j) {
-		myBatisBoardDao.updateCount(i, j);
+	public void updateCount(Board board) {
+		myBatisBoardDao.updateCount(board);
+	}
+	
+	@Override
+	public void updateCountOfAnswer(Board board) {
+		myBatisBoardDao.updateCountOfAnswer(board);
 	}
 
 	@Override

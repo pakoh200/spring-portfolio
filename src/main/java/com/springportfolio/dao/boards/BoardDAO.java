@@ -16,7 +16,9 @@ public interface BoardDAO {
 
 	void delete(int i);
 
-	void updateCount(int i, int j);
+	void updateCount(Board board);
+	
+	void updateCountOfAnswer(Board board);
 	
 	int selectCount(String skey, String sval);
 	

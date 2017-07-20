@@ -18,12 +18,13 @@ public class Board {
 	private String name;
 
 	@NotEmpty
-	@Size(min = 2, max = 300)
 	private String contents;
 
 	private Date createDate;
 
 	private int count;
+
+	private int countOfAnswer;
 
 	private int start;
 
@@ -36,31 +37,14 @@ public class Board {
 	public Board() {
 	}
 
-	public Board(int num, String title, String name, String contents, Date createDate, int count) {
+	public Board(int num, String title, String name, String contents, Date createDate, int count, int countOfAnswer) {
 		this.num = num;
 		this.title = title;
 		this.name = name;
 		this.contents = contents;
 		this.createDate = createDate;
 		this.count = count;
-	}
-
-	public Board(String title, String name, String contents) {
-		this.title = title;
-		this.name = name;
-		this.contents = contents;
-	}
-
-	public Board(int num, String title, String name, String contents) {
-		this.num = num;
-		this.title = title;
-		this.name = name;
-		this.contents = contents;
-	}
-
-	public Board(int num, int count) {
-		this.num = num;
-		this.count = count;
+		this.countOfAnswer = countOfAnswer;
 	}
 
 	public int getNum() {
@@ -109,6 +93,14 @@ public class Board {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public int getCountOfAnswer() {
+		return countOfAnswer;
+	}
+
+	public void setCountOfAnswer(int countOfAnswer) {
+		this.countOfAnswer = countOfAnswer;
 	}
 
 	public int getStart() {
@@ -187,7 +179,7 @@ public class Board {
 	@Override
 	public String toString() {
 		return "Board [num=" + num + ", title=" + title + ", name=" + name + ", contents=" + contents + ", createDate=" + createDate + ", count="
-				+ count + "]";
+				+ count + ", countOfAnswer=" + countOfAnswer + "]";
 	}
 
 }

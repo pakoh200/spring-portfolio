@@ -69,7 +69,11 @@
                                 <tbody>
                                 <c:forEach var="list" items="${list}">
 									<tr>
-										<td>${list.num}</td><td><a href="/boards/${list.num}/detail">${list.title}</a></td><td>${list.name}</td><td><fmt:formatDate value="${list.createDate}" pattern="yyyy.MM.dd HH:mm:ss"/></td><td>${list.count}</td>
+										<td>${list.num}</td><td><a href="/boards/${list.num}/detail">${list.title}</a>
+										<c:if test="${list.countOfAnswer > 0 }">
+										(+${list.countOfAnswer})
+										</c:if>
+										</td><td>${list.name}</td><td><fmt:formatDate value="${list.createDate}" pattern="yyyy.MM.dd HH:mm:ss"/></td><td>${list.count}</td>
 									</tr>
 								</c:forEach>
                                 </tbody>

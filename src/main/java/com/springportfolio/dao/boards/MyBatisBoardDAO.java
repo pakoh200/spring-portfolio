@@ -59,8 +59,13 @@ public class MyBatisBoardDAO implements BoardDAO {
 	}
 
 	@Override
-	public void updateCount(int i, int j) {
-		sqlSession.update("BoardMapper.updateCount", new Board(i, j));
+	public void updateCount(Board board) {
+		sqlSession.update("BoardMapper.updateCount", board);
+	}
+	
+	@Override
+	public void updateCountOfAnswer(Board board) {
+		sqlSession.update("BoardMapper.updateCountOfAnswer", board);
 	}
 	
 	@Override

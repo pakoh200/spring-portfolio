@@ -7,5 +7,6 @@
   <mappers>
     <mapper resource="com/springportfolio/dao/users/UserMapper.xml"/>
     <mapper resource="com/springportfolio/dao/boards/BoardMapper.xml"/>
+    <mapper resource="com/springportfolio/dao/answer/AnswerMapper.xml"/>
   </mappers>
 </configuration>

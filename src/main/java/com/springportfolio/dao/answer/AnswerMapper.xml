@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AnswerMapper">
+	<select id="select" resultType="com.springportfolio.domain.answer.Answer">
+		select * from ANSWER
+	</select>
+	
+	<select id="selectBoardId" resultType="com.springportfolio.domain.answer.Answer">
+		select * from ANSWER where boardId = #{boardId} order by id desc, createDate desc
+	</select>
+		
+	<insert id="createAnswer" useGeneratedKeys="true" parameterType="com.springportfolio.domain.answer.Answer">
+		insert into ANSWER(writer, contents, boardId, createDate)
+		values(#{writer}, #{contents}, #{boardId}, CURRENT_TIMESTAMP())
+
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<select id="selectOne" resultType="com.springportfolio.domain.answer.Answer">
+		select * from ANSWER where id = #{id}
+	</select>
+	
+	<update id="update">
+		update ANSWER set writer = #{writer}, contents = #{contents}, boardId = #{boardId}, createDate=CURRENT_TIMESTAMP()
+		where id = #{id}
+	</update>
+		 
+</mapper>

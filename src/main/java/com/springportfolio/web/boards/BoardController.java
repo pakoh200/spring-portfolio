@@ -15,7 +15,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.springportfolio.dao.answer.AnswerService;
 import com.springportfolio.dao.boards.BoardService;
+import com.springportfolio.domain.answer.Answer;
 import com.springportfolio.domain.boards.Board;
 import com.springportfolio.domain.users.Authenticate;
 import com.springportfolio.domain.users.User;
@@ -28,6 +30,9 @@ public class BoardController {
 	@Resource(name="boardService")
 	private BoardService boardService;
 	
+	@Resource(name="answerService")
+	private AnswerService answerService;
+	
 	@RequestMapping("/view")
 	public String view(HttpServletRequest request, Model model){
 		int start = 1, end = 10, pageSize = 10, limit = 10;
@@ -38,7 +43,6 @@ public class BoardController {
 		
 		skey = request.getParameter("skey");
 		sval = request.getParameter("sval");
-		
 		if(skey == null || skey == ""){
 			skey="title";
 		}
@@ -84,8 +88,11 @@ public class BoardController {
 		Board board = boardService.selectOne(num);
 		int count = board.getCount();
 		count+=1;
-		boardService.updateCount(board.getNum(), count);
+		board.setCount(count);
+		boardService.updateCount(board);
+		List<Answer> listAnswer = answerService.selectBoardId(board.getNum());
 		model.addAttribute("board", board);
+		model.addAttribute("listAnswer", listAnswer);
 		return "board/detail";
 	}
 	
@@ -106,6 +113,7 @@ public class BoardController {
 		if(bindingResult.hasErrors()){
 			return "board/form";
 		}
+		log.debug("contents : {}", board.getContents());
 		boardService.create(board);
 		return "redirect:/boards/view";
 	}
@@ -130,6 +138,7 @@ public class BoardController {
 		if(bindingResult.hasErrors()){
 			return "board/form";
 		}
+		log.debug("contents : {}", board.getContents());
 		boardService.updateBoard(board);
 		return "redirect:/boards/"+num+"/detail";
 	}

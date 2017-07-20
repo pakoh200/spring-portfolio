@@ -40,7 +40,7 @@ public class MyBatisBoardTest {
 	@Test
 	public void create() throws Exception {
 		try (SqlSession session = sqlSessionFactory.openSession()) {
-			Board board = new Board("한글", "userId", "가나다라");
+			Board board = new Board(22,"한글", "test", "가나다라", new java.util.Date(),0,0);
 			session.insert("BoardMapper.createBoard", board);
 			Board actual = session.selectOne("BoardMapper.selectOne", board.getNum());
 			log.debug("actual : {}", actual);
@@ -51,9 +51,9 @@ public class MyBatisBoardTest {
 	@Test
 	public void update() throws Exception {
 		try (SqlSession session = sqlSessionFactory.openSession()) {
-			Board board = new Board("한글", "userId", "가나다라");
+			Board board = new Board(23,"한글", "test", "hahahahah", new java.util.Date(),0,0);
 			session.insert("BoardMapper.createBoard", board);
-			Board updateBoard = new Board(board.getNum(), "한글2", "userId", "마바사아");
+			Board updateBoard = new Board(board.getNum(),"한글2", "test", "hahahahah", new java.util.Date(),0,0);
 			log.debug("updateBoard : {}", updateBoard);
 			session.update("BoardMapper.updateBoard", updateBoard);
 			Board updatedBoard = session.selectOne("BoardMapper.selectOne", board.getNum());
@@ -76,7 +76,8 @@ public class MyBatisBoardTest {
 			Board board = session.selectOne("BoardMapper.selectOne", 1);
 			int count = board.getCount();
 			count += 1;
-			session.update("BoardMapper.updateCount", new Board(1, count));
+			board.setCount(count);
+			session.update("BoardMapper.updateCount", board);
 			Board updateBoard = session.selectOne("BoardMapper.selectOne", 1);
 			log.debug("db : {}", updateBoard);
 		}
@@ -86,7 +87,7 @@ public class MyBatisBoardTest {
 	public void selectCount() throws Exception {
 		try (SqlSession session = sqlSessionFactory.openSession()) {
 			int total = session.selectOne("BoardMapper.selectCount");
-			log.debug("total : {}", ""+total);
+			log.debug("total : {}", total);
 		}
 	}
 

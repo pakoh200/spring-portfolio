@@ -3,13 +3,9 @@ $(function(){
 	$(document).on("click",".pagination li a", function(e){
 		$(".panel-body").find("div").remove();
 		$("#search_pagination").find("li").remove();
-		console.log("click!!");
-		e.preventDefault();
 		
 		var queryString = $(".form-inline").serialize();
-		
 		var url = $(this).attr("href");
-		e.preventDefault();
 		
 		$.ajax({
 			type:"get",
@@ -74,10 +70,8 @@ $(function(){
 function addSearch(e){
 	$(".panel-body").find("div").remove();
 	$("#search_pagination").find("li").remove();
-	e.preventDefault();
 	
 	var queryString = $(".form-inline").serialize();
-	
 	var url = $(".form-inline").attr("action");
 	
 	$.ajax({

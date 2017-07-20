@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="/stylesheets/js/jquery.js"></script>
 	<link rel="stylesheet" href="/stylesheets/daumeditor/css/editor.css" type="text/css" charset="utf-8"/>
 	<script src="/stylesheets/daumeditor/js/editor_loader.js?environment=development" type="text/javascript" charset="utf-8"></script>
-	<script src="/stylesheets/js/daumeditor.js"></script>
+	<script src="/stylesheets/js/daumeditor.js?ver=1"></script>
     <%@ include file="../commons/header.jspf" %>
 
 </head>
