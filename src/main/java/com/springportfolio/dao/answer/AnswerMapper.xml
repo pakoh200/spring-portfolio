@@ -8,7 +8,7 @@
 	</select>
 	
 	<select id="selectBoardId" resultType="com.springportfolio.domain.answer.Answer">
-		select * from ANSWER where boardId = #{boardId} order by id desc, createDate desc
+		select * from ANSWER where boardId = #{boardId} order by id desc
 	</select>
 		
 	<insert id="createAnswer" useGeneratedKeys="true" parameterType="com.springportfolio.domain.answer.Answer">

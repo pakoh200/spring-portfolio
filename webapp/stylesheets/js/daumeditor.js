@@ -73,15 +73,7 @@ $(function() {
 		}
 	});
 
-	$("#save_button").click(function(e) {
-		// 다음에디터가 포함된 form submit
-//		e.preventDefault();
-//		console.log("test");
-//		var queryString = $(".write-answer").serialize();
-//		console.log("query : " + queryString);
-//		var url = $(".write-answer").attr("action");
-//		console.log("url : " + url);
-//		alert("gggg");
+	$("#save_button").click(function() {
 		Editor.save();
 	})
 })
@@ -132,12 +124,8 @@ function setForm(editor) {
 	form.createField(textarea);
 	
 	if($('#form-group').hasClass('write-answer') == true){
-		console.log("test");
 		var queryString = $(".write-answer").serialize();
-		console.log("query : " + queryString);
 		var url = $(".write-answer").attr("action");
-		console.log("url : " + url);
-		//e.preventDefault();
 		
 		$.ajax({
 			type : 'get',
@@ -151,9 +139,19 @@ function setForm(editor) {
 			alert("댓글통신실패");
 		}
 		function onSuccess(data){
-			console.log(data);
-			var answerTemplate = "<div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>작성자: "+data.writer+"</h3><span>"+data.createDate+"</span></div><div class='panel-body'>"+data.contents+"</div></div>";
+			var createDate = new Date(data.createDate);
+			var month = (createDate.getMonth()+1 < 10? "0"+(createDate.getMonth()+1):createDate.getMonth()+1);
+			var dd = (createDate.getDate() < 10? "0"+createDate.getDate():createDate.getDate());
+			var hh = (createDate.getHours() < 10? "0"+createDate.getHours():createDate.getHours());
+			var mm = (createDate.getMinutes() < 10? "0"+createDate.getMinutes():createDate.getMinutes());
+			var ss = (createDate.getSeconds() < 10? "0"+createDate.getSeconds():createDate.getSeconds());
+			var date = createDate.getFullYear()+"."+month+"."+dd+" "+hh+":"+mm+":"+ss;
+			var answerTemplate = "<div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>작성자: "+data.writer+"</h3><span>"+date+"</span></div><div class='panel-body'>"+data.contents+"</div></div>";
 			$(".answer-template").prepend(answerTemplate);
+			$("textarea[name=contents]").remove();
+			Editor.modify({
+				"content" : document.getElementById("sample_contents_source")
+			});
 		}
 		return;
 	}
