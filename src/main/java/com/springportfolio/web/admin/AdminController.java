@@ -55,7 +55,7 @@ public class AdminController {
 	public String delete(@PathVariable Integer id, HttpSession session){
 		log.debug("id : {}", id);
 		User sessionedUser = (User)session.getAttribute("user");
-		if(!sessionedUser.getAuthority().equals("ROLE_ADMIN")){
+		if(!sessionedUser.matchAuthority("ROLE_ADMIN")){
 			throw new NullPointerException();
 		}
 		SnsUser dbSnsUser = userDao.findBySnsIntId(id);
@@ -69,7 +69,7 @@ public class AdminController {
 	@RequestMapping(value="{id}/authority", method=RequestMethod.POST)
 	public String updateAutority(@PathVariable Integer id, HttpServletRequest req, HttpSession session){
 		User sessionedUser = (User)session.getAttribute("user");
-		if(!sessionedUser.getAuthority().equals("ROLE_ADMIN")){
+		if(!sessionedUser.matchAuthority("ROLE_ADMIN")){
 			throw new NullPointerException();
 		}
 		String authority = req.getParameter("authority");
@@ -133,7 +133,7 @@ public class AdminController {
 	@RequestMapping("/delete")
 	public String delete(HttpServletRequest req, HttpSession session){
 		User sessionedUser = (User)session.getAttribute("user");
-		if(!sessionedUser.getAuthority().equals("ROLE_ADMIN")){
+		if(!sessionedUser.matchAuthority("ROLE_ADMIN")){
 			throw new NullPointerException();
 		}
 		String[] checkboxNum = req.getParameterValues("checkboxNum");

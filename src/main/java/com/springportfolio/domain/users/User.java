@@ -99,15 +99,8 @@ public class User {
 		return authenticate.matchPassword(this.password);
 	}
 
-//	public boolean matchUserId(String newUserId) {
-//		if (newUserId == null) {
-//			return false;
-//		}
-//		return newUserId.equals(this.userId);
-//	}
-
 	public boolean matchId(Integer id) {
-		if(id == null){
+		if (id == null) {
 			return false;
 		}
 		return id.equals(this.id);
@@ -121,10 +114,17 @@ public class User {
 	}
 
 	public boolean matchAuthority(String authority) {
-		if(authority == null){
+		if (authority == null) {
 			return false;
 		}
 		return this.authority.equals(authority);
+	}
+
+	public boolean matchName(String writer) {
+		if(writer == null){
+			return false;
+		}
+		return this.name.equals(writer);
 	}
 
 	@Override
@@ -177,7 +177,5 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", userId=" + userId + ", name=" + name + ", email=" + email + ", authority=" + authority + "]";
 	}
-
-
 
 }

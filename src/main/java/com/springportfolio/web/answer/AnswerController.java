@@ -50,7 +50,7 @@ public class AnswerController {
 		}
 		User user = (User)temp;
 		Answer answer = answerService.selectOne(id);
-		if(user.getName() != answer.getWriter()){
+		if(!user.matchName(answer.getWriter())){
 			throw new IllegalArgumentException("자신의 글만 삭제할 수 있습니다.");
 		}
 		Board board = boardService.selectOne(answer.getBoardId());
