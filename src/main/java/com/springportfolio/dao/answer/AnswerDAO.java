@@ -16,4 +16,6 @@ public interface AnswerDAO {
 	Answer selectOne(int i);
 	
 	void update(Answer answer);
+	
+	void delete(int id);
 }

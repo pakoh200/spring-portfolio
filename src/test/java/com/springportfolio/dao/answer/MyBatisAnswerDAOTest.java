@@ -63,4 +63,9 @@ public class MyBatisAnswerDAOTest {
 		assertThat(updateAnswer, is(updatedAnswer));
 	}
 
+	@Test
+	public void deleteAnswer() throws Exception {
+		myBatisAnswerDao.delete(3);
+		assertNull(myBatisAnswerDao.selectOne(3));
+	}
 }

@@ -64,6 +64,7 @@ $(function(){
 				alert("통신실패!!");
 			}
 		});	
+		return false;
 	})
 });
 
@@ -128,4 +129,5 @@ function addSearch(e){
 			alert("통신실패!!");
 		}
 	});	
+	return false;
 }

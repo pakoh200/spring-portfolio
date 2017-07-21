@@ -11,9 +11,8 @@
 	<script type="text/javascript" src="/stylesheets/js/jquery.js"></script>
 	<link rel="stylesheet" href="/stylesheets/daumeditor/css/editor.css" type="text/css" charset="utf-8"/>
 	<script src="/stylesheets/daumeditor/js/editor_loader.js?environment=development" type="text/javascript" charset="utf-8"></script>
-	<script src="/stylesheets/js/daumeditor.js?ver=1"></script>
+	<script src="/stylesheets/js/daumeditor.js?ver=2"></script>
     <%@ include file="../commons/header.jspf" %>
-
 </head>
 
 <body>
@@ -66,19 +65,25 @@
  						
  						<div class="col-lg-12">
  						댓글 수 : ${board.countOfAnswer}
- 						<div class="answer-template">
+ 						<article class="answer-template">
  						<c:forEach var="listAnswer" items="${listAnswer}">
+ 						<article class="answer-article" id="answer-article">
  							<div class="panel panel-default">
   								<div class="panel-heading">
     								<h3 class="panel-title">작성자: ${listAnswer.writer}</h3>
     								<span><fmt:formatDate value="${listAnswer.createDate}" pattern="yyyy.MM.dd HH:mm:ss"/></span>
+    								<span>
+    								<a href="#">수정</a> 
+    								<a class="answer-delete" href="/answer/${listAnswer.id}">삭제</a>
+    								</span>
  								</div>
   								<div class="panel-body">
     								${listAnswer.contents}
   								</div>
 							</div>
+ 						</article>
  						</c:forEach>
- 						</div>
+ 						</article>
  						</div>
  						<c:if test="${answer.contents ne null}">
  						</c:if>

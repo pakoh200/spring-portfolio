@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,6 +36,22 @@ public class AnswerController {
 		boardService.updateCountOfAnswer(board);
 		log.debug("answerId : {}", answerId);
 		return answerService.selectOne(answerId);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Integer id){
+		log.debug("id : {}", id);
+		Answer answer = answerService.selectOne(id);
+		log.debug("answer : {}", answer);
+		Board board = boardService.selectOne(answer.getBoardId());
+		log.debug("board : {}", board);
+		int countOfAnswer = board.getCountOfAnswer();
+		log.debug("countOfAnswer : {}", countOfAnswer);
+		countOfAnswer -= 1;
+		log.debug("countOfAnswer : {}", countOfAnswer);
+		board.setCountOfAnswer(countOfAnswer);
+		boardService.updateCountOfAnswer(board);
+		answerService.delete(id);
 	}
 
 }

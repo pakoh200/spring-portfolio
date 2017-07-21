@@ -8,7 +8,7 @@
 	</select>
 	
 	<select id="selectBoardId" resultType="com.springportfolio.domain.answer.Answer">
-		select * from ANSWER where boardId = #{boardId} order by id desc
+		select * from ANSWER where boardId = #{boardId} order by id asc
 	</select>
 		
 	<insert id="createAnswer" useGeneratedKeys="true" parameterType="com.springportfolio.domain.answer.Answer">
@@ -28,5 +28,9 @@
 		update ANSWER set writer = #{writer}, contents = #{contents}, boardId = #{boardId}, createDate=CURRENT_TIMESTAMP()
 		where id = #{id}
 	</update>
+	
+	<delete id="delete">
+		delete from ANSWER where id = #{id}
+	</delete>
 		 
 </mapper>

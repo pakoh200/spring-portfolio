@@ -76,6 +76,30 @@ $(function() {
 	$("#save_button").click(function() {
 		Editor.save();
 	})
+	
+	// answer-delete
+	//$("a.answer-delete").click(deleteAnswer);
+	$(document).on("click", "a.answer-delete", function(e){
+		console.log("delete click!!");
+		
+		var deleteBtn = $(this);
+		var url = deleteBtn.attr("href");
+		
+		$.ajax({
+			type : 'delete',
+			url : url,
+			error : function(){
+				alert("삭제 실패");
+			},
+			success : function(data, status){
+				console.log(data);
+//				$("#answer-article").find("div").remove();
+				deleteBtn.closest("article").remove();
+			}
+		});
+		return false;
+	});
+
 })
 function saveContent() {
 	Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
@@ -146,8 +170,10 @@ function setForm(editor) {
 			var mm = (createDate.getMinutes() < 10? "0"+createDate.getMinutes():createDate.getMinutes());
 			var ss = (createDate.getSeconds() < 10? "0"+createDate.getSeconds():createDate.getSeconds());
 			var date = createDate.getFullYear()+"."+month+"."+dd+" "+hh+":"+mm+":"+ss;
-			var answerTemplate = "<div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>작성자: "+data.writer+"</h3><span>"+date+"</span></div><div class='panel-body'>"+data.contents+"</div></div>";
-			$(".answer-template").prepend(answerTemplate);
+			var answerTemplate = "<article class='answer-article'><div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>작성자: "+data.writer+
+			"</h3><span>"+date+"</span><span><a href='#'> 수정</a> <a class='answer-delete' href='/answer/"+data.id+
+			"'>삭제</a> </span></div><div class='panel-body'>"+data.contents+"</div></div></article>";
+			$(".answer-template").append(answerTemplate);
 			$("textarea[name=contents]").remove();
 			Editor.modify({
 				"content" : document.getElementById("sample_contents_source")

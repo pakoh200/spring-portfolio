@@ -46,4 +46,9 @@ public class MyBatisAnswerDAO implements AnswerDAO {
 	public void update(Answer answer) {
 		sqlSession.update("AnswerMapper.update", answer);
 	}
+	
+	@Override
+	public void delete(int id) {
+		sqlSession.delete("AnswerMapper.delete", id);
+	}
 }

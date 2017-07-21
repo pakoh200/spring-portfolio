@@ -38,4 +38,9 @@ public class AnswerService implements AnswerDAO {
 	public void update(Answer answer) {
 		myBatisAnswerDao.update(answer);
 	}
+	
+	@Override
+	public void delete(int id) {
+		myBatisAnswerDao.delete(id);
+	}
 }
