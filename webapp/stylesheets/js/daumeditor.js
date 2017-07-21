@@ -89,7 +89,7 @@ $(function() {
 			type : 'delete',
 			url : url,
 			error : function(){
-				alert("삭제 실패");
+				alert("삭제 실패 자신의 글만 삭제 가능합니다.");
 			},
 			success : function(data, status){
 				console.log(data);

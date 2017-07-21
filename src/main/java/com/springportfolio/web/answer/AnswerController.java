@@ -1,9 +1,11 @@
 package com.springportfolio.web.answer;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,8 @@ import com.springportfolio.dao.answer.AnswerService;
 import com.springportfolio.dao.boards.BoardService;
 import com.springportfolio.domain.answer.Answer;
 import com.springportfolio.domain.boards.Board;
+import com.springportfolio.domain.users.Authenticate;
+import com.springportfolio.domain.users.User;
 
 @RestController
 @RequestMapping("/answer")
@@ -39,16 +43,19 @@ public class AnswerController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id){
-		log.debug("id : {}", id);
+	public void delete(@PathVariable Integer id, Model model, HttpSession session){
+		Object temp = session.getAttribute("user");
+		if(temp==null){
+			throw new IllegalArgumentException("로그인하세요.");
+		}
+		User user = (User)temp;
 		Answer answer = answerService.selectOne(id);
-		log.debug("answer : {}", answer);
+		if(user.getName() != answer.getWriter()){
+			throw new IllegalArgumentException("자신의 글만 삭제할 수 있습니다.");
+		}
 		Board board = boardService.selectOne(answer.getBoardId());
-		log.debug("board : {}", board);
 		int countOfAnswer = board.getCountOfAnswer();
-		log.debug("countOfAnswer : {}", countOfAnswer);
 		countOfAnswer -= 1;
-		log.debug("countOfAnswer : {}", countOfAnswer);
 		board.setCountOfAnswer(countOfAnswer);
 		boardService.updateCountOfAnswer(board);
 		answerService.delete(id);
