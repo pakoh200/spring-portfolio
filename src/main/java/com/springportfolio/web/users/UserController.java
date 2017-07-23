@@ -2,7 +2,10 @@ package com.springportfolio.web.users;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -10,6 +13,16 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.google.api.impl.GoogleTemplate;
+import org.springframework.social.google.api.plus.Person;
+import org.springframework.social.google.api.plus.PlusOperations;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.AccessGrant;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +36,7 @@ import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.users.Authenticate;
 import com.springportfolio.domain.users.Sns;
 import com.springportfolio.domain.users.User;
+import com.springportfolio.naver.GoogleUser;
 import com.springportfolio.naver.NaverUser;
 import com.springportfolio.naver.SnsUser;
 import com.springportfolio.naver.Token;
@@ -35,6 +49,12 @@ public class UserController {
 
 	@Autowired
 	private UserDAO userDao;
+	
+	@Resource(name="googleConnectionFactory")
+	private GoogleConnectionFactory googleConnectionFactory;
+	
+	@Resource(name="googleOAuth2Parameters")
+	private OAuth2Parameters googleOAuth2Parameters;
 
 	@RequestMapping("/form")
 	public String createForm(Model model) {
@@ -190,8 +210,8 @@ public class UserController {
 
 	@RequestMapping(value = "/naverLogin")
 	public String naverLogin(HttpSession session) {
-		String mydomain = "https%3A%2F%2Fphcworld.com%3A42146%2Fusers%2Fcallback";
-		String clientId = "id";
+		String mydomain = "http%3A%2F%2Fwww.phcworld.com%2Fusers%2Fcallback";
+		String clientId = "";
 		String requestUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + mydomain
 				+ "&state=";
 		String state = Utils.generateState(); // 토큰을 생성합니다.
@@ -211,8 +231,8 @@ public class UserController {
 		String errorDescription = request.getParameter("error_description");
 		log.debug("error : {}, error_description : {}", error, errorDescription);
 
-		String clientId = "id";
-		String clientSecret = "secret";
+		String clientId = "";
+		String clientSecret = "";
 		String access_token = null;
 		String refresh_token = null;
 		String token_type = null;
@@ -233,6 +253,7 @@ public class UserController {
 		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
 		if (dbSnsUser == null) {
 			int id = userDao.create(snsUser);
+			log.debug("id : {}", id);
 			snsUser.setId(id);
 			userDao.createSnsUser(snsUser);
 			dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
@@ -240,6 +261,45 @@ public class UserController {
 		User user = userDao.findByIntId(dbSnsUser.getId());
 		session.setAttribute("user", user);
 
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/googleLogin")
+	public String googleLogin(){
+		OAuth2Operations oauthOperatioins = googleConnectionFactory.getOAuthOperations();
+		String url = oauthOperatioins.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+		log.debug("google url : {}", url);
+		return "redirect:" + url;
+	}
+	
+	@RequestMapping("/googleCallback")
+	public String googleCallback(@RequestParam String code, HttpSession session){
+		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(), null);
+		String accessToken = accessGrant.getAccessToken();
+		Long expireTime = accessGrant.getExpireTime();
+		if (expireTime != null && expireTime < System.currentTimeMillis()) {
+			accessToken = accessGrant.getRefreshToken();
+			log.debug("accessToken is expired. refresh token = {}", accessToken);
+		}
+		Connection<Google> connection = googleConnectionFactory.createConnection(accessGrant);
+		Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi();
+		PlusOperations plusOperations = google.plusOperations();
+		Person person = plusOperations.getGoogleProfile();
+		GoogleUser googleUser = new GoogleUser(person.getId(), person.getAccountEmail(), person.getDisplayName(), person.getImageUrl());
+		SnsUser snsUser = new SnsUser(googleUser);
+		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
+		if (dbSnsUser == null) {
+			int id = userDao.create(snsUser);
+			log.debug("id : {}", id);
+			snsUser.setId(id);
+			userDao.createSnsUser(snsUser);
+			dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
+			log.debug("dbSnsUser : {}", dbSnsUser);
+		}
+		User user = userDao.findByIntId(dbSnsUser.getId());
+		session.setAttribute("user", user);
+		
 		return "redirect:/";
 	}
 }

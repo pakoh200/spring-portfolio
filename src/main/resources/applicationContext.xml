@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
@@ -27,7 +28,17 @@
 
 	<bean id="userDao" class="com.springportfolio.dao.users.UserDAO"
 		p:dataSource-ref="dataSource" />
-
+		
+	<bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<constructor-arg value="" />
+		<constructor-arg value=""/>
+	</bean>
+	
+	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters" 
+		p:scope="https://www.googleapis.com/auth/userinfo.email"
+		p:redirectUri="http://www.phcworld.com/users/googleCallback"
+	/>
+		
 	<!-- 
 	<bean id="boardDao" class="com.springportfolio.dao.boards.BoardDAO"
 		p:dataSource-ref="dataSource" />

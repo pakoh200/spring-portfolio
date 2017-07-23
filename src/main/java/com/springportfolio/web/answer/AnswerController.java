@@ -43,7 +43,7 @@ public class AnswerController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id, Model model, HttpSession session){
+	public void delete(@PathVariable Integer id, HttpSession session){
 		Object temp = session.getAttribute("user");
 		if(temp==null){
 			throw new IllegalArgumentException("로그인하세요.");

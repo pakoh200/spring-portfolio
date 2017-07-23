@@ -26,6 +26,13 @@ public class SnsUser extends User{
 		this.snsName = naverUser.getName();
 	}
 	
+	public SnsUser(GoogleUser googleUser){
+		super(null, null, googleUser.getName(), googleUser.getEmail(), "ROLE_USER");
+		this.snsId = googleUser.getId();
+		this.snsType = "GOOGLE";
+		this.snsName = googleUser.getName();
+	}
+	
 	public int getId() {
 		return id;
 	}
