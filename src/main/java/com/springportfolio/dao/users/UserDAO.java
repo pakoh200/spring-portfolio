@@ -15,7 +15,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.springportfolio.domain.users.Sns;
 import com.springportfolio.domain.users.User;
-import com.springportfolio.naver.SnsUser;
+import com.springportfolio.sns.SnsUser;
 
 public class UserDAO extends JdbcDaoSupport {
 	
@@ -30,6 +30,22 @@ public class UserDAO extends JdbcDaoSupport {
 		};
 		try {
 			return getJdbcTemplate().queryForObject(sql, rowMapper, userId);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+	
+	public User findByName(String name){
+		String sql = "select * from USERS where name=?";
+		RowMapper<User> rowMapper = new RowMapper<User>() {
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new User(rs.getInt("id"), rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"),
+						rs.getString("authority"));
+			}
+		};
+		try {
+			return getJdbcTemplate().queryForObject(sql, rowMapper, name);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -76,7 +92,7 @@ public class UserDAO extends JdbcDaoSupport {
 		List<User> list = getJdbcTemplate().query(sql, rowMapper);
 		return list;
 	}
-
+	
 	public void delete(int id) {
 		String sql = "delete from USERS where id = ?";
 		getJdbcTemplate().update(sql, id);

@@ -1,4 +1,4 @@
-package com.springportfolio.naver;
+package com.springportfolio.sns;
 
 public class GoogleUser {
 	private String id;

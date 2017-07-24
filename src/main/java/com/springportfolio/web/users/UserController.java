@@ -36,10 +36,10 @@ import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.users.Authenticate;
 import com.springportfolio.domain.users.Sns;
 import com.springportfolio.domain.users.User;
-import com.springportfolio.naver.GoogleUser;
-import com.springportfolio.naver.NaverUser;
-import com.springportfolio.naver.SnsUser;
-import com.springportfolio.naver.Token;
+import com.springportfolio.sns.GoogleUser;
+import com.springportfolio.sns.NaverUser;
+import com.springportfolio.sns.SnsUser;
+import com.springportfolio.sns.Token;
 import com.springportfolio.support.Utils;
 
 @Controller
@@ -211,6 +211,7 @@ public class UserController {
 	@RequestMapping(value = "/naverLogin")
 	public String naverLogin(HttpSession session) {
 		String mydomain = "http%3A%2F%2Fwww.phcworld.com%2Fusers%2Fcallback";
+		//String mydomain = "http%3A%2F%2Flocalhost%3A8080%2Fusers%2Fcallback";
 		String clientId = "";
 		String requestUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + mydomain
 				+ "&state=";
@@ -252,6 +253,12 @@ public class UserController {
 		SnsUser snsUser = new SnsUser(naverUser);
 		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
 		if (dbSnsUser == null) {
+			String name = snsUser.getName();
+			User dbUser = userDao.findByName(name);
+			if(dbUser != null){
+				name += "(2)";
+				snsUser.setName(name);
+			}
 			int id = userDao.create(snsUser);
 			log.debug("id : {}", id);
 			snsUser.setId(id);
@@ -290,12 +297,17 @@ public class UserController {
 		SnsUser snsUser = new SnsUser(googleUser);
 		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
 		if (dbSnsUser == null) {
+			String name = snsUser.getName();
+			User dbUser = userDao.findByName(name);
+			if(dbUser != null){
+				name += "(2)";
+				snsUser.setName(name);
+			}
 			int id = userDao.create(snsUser);
 			log.debug("id : {}", id);
 			snsUser.setId(id);
 			userDao.createSnsUser(snsUser);
 			dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
-			log.debug("dbSnsUser : {}", dbSnsUser);
 		}
 		User user = userDao.findByIntId(dbSnsUser.getId());
 		session.setAttribute("user", user);

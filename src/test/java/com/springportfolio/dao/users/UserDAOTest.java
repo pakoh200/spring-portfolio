@@ -15,8 +15,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.springportfolio.domain.users.Sns;
 import com.springportfolio.domain.users.User;
-import com.springportfolio.naver.NaverUser;
-import com.springportfolio.naver.SnsUser;
+import com.springportfolio.sns.NaverUser;
+import com.springportfolio.sns.SnsUser;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,6 +30,12 @@ public class UserDAOTest {
 	@Test
 	public void findById() {
 		User user = userDao.findById("test");
+		log.debug("User : {}", user);
+	}
+	
+	@Test
+	public void findByName() throws Exception {
+		User user = userDao.findByName("test");
 		log.debug("User : {}", user);
 	}
 	

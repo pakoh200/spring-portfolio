@@ -1,4 +1,4 @@
-package com.springportfolio.naver;
+package com.springportfolio.sns;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -22,7 +22,7 @@ import com.springportfolio.dao.boards.BoardService;
 import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.boards.Board;
 import com.springportfolio.domain.users.User;
-import com.springportfolio.naver.SnsUser;
+import com.springportfolio.sns.SnsUser;
 
 @Controller
 @RequestMapping("/admin")
