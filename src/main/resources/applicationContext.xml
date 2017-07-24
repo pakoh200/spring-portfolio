@@ -38,6 +38,16 @@
 		p:scope="https://www.googleapis.com/auth/userinfo.email"
 		p:redirectUri="http://www.phcworld.com/users/googleCallback"
 	/>
+	
+	<bean id="facebookConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+		<constructor-arg value="" />
+		<constructor-arg value=""/>
+	</bean>
+	
+	<bean id="facebookOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters"
+		p:scope="email"
+		p:redirectUri="http://www.phcworld.com/users/facebookCallback"
+	/>
 		
 	<!-- 
 	<bean id="boardDao" class="com.springportfolio.dao.boards.BoardDAO"

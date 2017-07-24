@@ -99,6 +99,7 @@ $(function() {
 		});
 		return false;
 	});
+	
 
 })
 function saveContent() {
@@ -171,7 +172,7 @@ function setForm(editor) {
 			var ss = (createDate.getSeconds() < 10? "0"+createDate.getSeconds():createDate.getSeconds());
 			var date = createDate.getFullYear()+"."+month+"."+dd+" "+hh+":"+mm+":"+ss;
 			var answerTemplate = "<article class='answer-article'><div class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>작성자: "+data.writer+
-			"</h3><span>"+date+"</span><span><a href='#'> 수정</a> <a class='answer-delete' href='/answer/"+data.id+
+			"</h3><span>"+date+"</span><span><a class='answer-delete' href='/answer/"+data.id+
 			"'>삭제</a> </span></div><div class='panel-body'>"+data.contents+"</div></div></article>";
 			$(".answer-template").append(answerTemplate);
 			$("textarea[name=contents]").remove();

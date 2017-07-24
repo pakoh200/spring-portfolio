@@ -35,7 +35,13 @@
   <body>
 
     <div class="container">
-
+	<c:if test="${not empty emailError}">
+		<div class="alert alert-danger" role="alert">
+  			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+ 			<span class="sr-only">Error:</span>
+  				${emailError}
+		</div>
+		</c:if>
 	<form:form modelAttribute="authenticate" cssClass="form-signin" action="/users/login" method="post">
         <h2 class="form-signin-heading">로그인</h2>
         <label for="inputUserId" class="sr-only">아이디</label>
@@ -54,6 +60,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
         <a href="/users/naverLogin"><img src="/stylesheets/image/naver_login_Green.PNG" width="300" height="55"></a>
         <a href="/users/googleLogin"><img src="/stylesheets/image/google_signin_light.png" width="300" height="55"></a>
+		<a href="/users/facebookLogin"><img src="/stylesheets/image/fb-login.png" width="300" height="55"></a>
       <div class="form-signin" align="center">
       <span class="col-sm-4"><a href="/users/form">회원가입</a></span><span class="col-sm-6 col-sm-offset-2"></span>
       </div>

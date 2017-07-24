@@ -33,6 +33,13 @@ public class SnsUser extends User{
 		this.snsName = googleUser.getName();
 	}
 	
+	public SnsUser(FacebookUser facebookUser) {
+		super(null, null, facebookUser.getName(), facebookUser.getEmail(), "ROLE_USER");
+		this.snsId = facebookUser.getId();
+		this.snsType = "FACEBOOK";
+		this.snsName = facebookUser.getName();
+	}
+
 	public int getId() {
 		return id;
 	}

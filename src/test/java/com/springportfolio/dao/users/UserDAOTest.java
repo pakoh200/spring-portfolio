@@ -40,6 +40,12 @@ public class UserDAOTest {
 	}
 	
 	@Test
+	public void findByEmail() throws Exception {
+		User user = userDao.findByEmail("test@test.test");
+		log.debug("User : {}", user);
+	}
+	
+	@Test
 	public void findByIntId() {
 		User user = userDao.findByIntId(1);
 		log.debug("User : {}", user);

@@ -84,6 +84,7 @@
      			<button type="submit" class="btn btn-default">회원가입</button><br>
      			<a href="/users/naverLogin"><img src="/stylesheets/image/naver_login_Green.PNG" width="160"></a>
      			<a href="/users/googleLogin"><img src="/stylesheets/image/google_signin_light.png" width="160"></a>
+     			<a href="/users/facebookLogin"><img src="/stylesheets/image/fb-login.png" width="160"></a>
    			</div>
   		</div>
 	</form:form>

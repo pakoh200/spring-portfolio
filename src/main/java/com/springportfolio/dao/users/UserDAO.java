@@ -50,6 +50,22 @@ public class UserDAO extends JdbcDaoSupport {
 			return null;
 		}
 	}
+	
+	public User findByEmail(String email){
+		String sql = "select * from USERS where email=?";
+		RowMapper<User> rowMapper = new RowMapper<User>() {
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new User(rs.getInt("id"), rs.getString("userId"), rs.getString("password"), rs.getString("name"), rs.getString("email"),
+						rs.getString("authority"));
+			}
+		};
+		try {
+			return getJdbcTemplate().queryForObject(sql, rowMapper, email);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
 
 	public int create(User user) {
 		String sql = "insert into USERS(userId, password, name, email, authority) values(?, ?, ?, ?, ?)";

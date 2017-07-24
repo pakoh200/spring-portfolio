@@ -2,8 +2,6 @@ package com.springportfolio.web.users;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.impl.FacebookTemplate;
+import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.google.api.Google;
 import org.springframework.social.google.api.impl.GoogleTemplate;
 import org.springframework.social.google.api.plus.Person;
@@ -36,6 +37,7 @@ import com.springportfolio.dao.users.UserDAO;
 import com.springportfolio.domain.users.Authenticate;
 import com.springportfolio.domain.users.Sns;
 import com.springportfolio.domain.users.User;
+import com.springportfolio.sns.FacebookUser;
 import com.springportfolio.sns.GoogleUser;
 import com.springportfolio.sns.NaverUser;
 import com.springportfolio.sns.SnsUser;
@@ -55,6 +57,12 @@ public class UserController {
 	
 	@Resource(name="googleOAuth2Parameters")
 	private OAuth2Parameters googleOAuth2Parameters;
+	
+	@Resource(name="facebookConnectionFactory")
+	private FacebookConnectionFactory facebookConnectionFactory;
+	
+	@Resource(name="facebookOAuth2Parameters")
+	private OAuth2Parameters facebookOAuth2Parameters;
 
 	@RequestMapping("/form")
 	public String createForm(Model model) {
@@ -72,6 +80,11 @@ public class UserController {
 				log.debug("error : {},{}", error.getCode(), error.getDefaultMessage());
 			}
 			return "users/form";
+		}
+		User emailUser = userDao.findByEmail(user.getEmail());
+		if(emailUser != null){
+			model.addAttribute("emailError", "이미 등록된 이메일 주소입니다.");
+			return "users/login";
 		}
 		User dbUser = userDao.findById(user.getUserId());
 		if (dbUser != null) {
@@ -221,7 +234,7 @@ public class UserController {
 	}
 
 	@RequestMapping("/callback")
-	public String callback(@RequestParam String state, @RequestParam String code, HttpServletRequest request, HttpSession session)
+	public String callback(@RequestParam String state, @RequestParam String code, HttpServletRequest request, Model model, HttpSession session)
 			throws UnsupportedEncodingException {
 		String storedState = (String) request.getSession().getAttribute("state");
 		if (!state.equals(storedState)) {
@@ -253,12 +266,18 @@ public class UserController {
 		SnsUser snsUser = new SnsUser(naverUser);
 		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
 		if (dbSnsUser == null) {
+			User emailUser = userDao.findByEmail(naverUser.getEmail());
+			if(emailUser != null){
+				model.addAttribute("emailError", "이미 등록된 이메일 주소입니다.");
+				return "users/login";
+			}
 			String name = snsUser.getName();
 			User dbUser = userDao.findByName(name);
-			if(dbUser != null){
+			while(dbUser != null){
 				name += "(2)";
-				snsUser.setName(name);
+				dbUser = userDao.findByName(name);
 			}
+			snsUser.setName(name);
 			int id = userDao.create(snsUser);
 			log.debug("id : {}", id);
 			snsUser.setId(id);
@@ -280,7 +299,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/googleCallback")
-	public String googleCallback(@RequestParam String code, HttpSession session){
+	public String googleCallback(@RequestParam String code, Model model, HttpSession session){
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(), null);
 		String accessToken = accessGrant.getAccessToken();
@@ -297,12 +316,18 @@ public class UserController {
 		SnsUser snsUser = new SnsUser(googleUser);
 		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
 		if (dbSnsUser == null) {
+			User emailUser = userDao.findByEmail(person.getAccountEmail());
+			if(emailUser != null){
+				model.addAttribute("emailError", "이미 등록된 이메일 주소입니다.");
+				return "users/login";
+			}
 			String name = snsUser.getName();
 			User dbUser = userDao.findByName(name);
-			if(dbUser != null){
+			while(dbUser != null){
 				name += "(2)";
-				snsUser.setName(name);
+				dbUser = userDao.findByName(name);
 			}
+			snsUser.setName(name);
 			int id = userDao.create(snsUser);
 			log.debug("id : {}", id);
 			snsUser.setId(id);
@@ -312,6 +337,55 @@ public class UserController {
 		User user = userDao.findByIntId(dbSnsUser.getId());
 		session.setAttribute("user", user);
 		
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/facebookLogin")
+	public String getAuthorizeUrl(){
+		OAuth2Operations oauth2Operations = facebookConnectionFactory.getOAuthOperations();
+		String authorizeUrl = oauth2Operations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, facebookOAuth2Parameters);
+		log.debug("authorizeUrl : {}", authorizeUrl);
+		return "redirect:" + authorizeUrl;
+	}
+	
+	@RequestMapping("/facebookCallback")
+	public String facebookCallback(@RequestParam String code, Model model, HttpSession session){
+		OAuth2Operations oauthOperations = facebookConnectionFactory.getOAuthOperations();
+		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, facebookOAuth2Parameters.getRedirectUri(), null);
+		String accessToken = accessGrant.getAccessToken();
+		Long expireTime = accessGrant.getExpireTime();
+		if (expireTime != null && expireTime < System.currentTimeMillis()) {
+			accessToken = accessGrant.getRefreshToken();
+			log.debug("accessToken is expired. refresh token = {}", accessToken);
+		}
+		Connection<Facebook> connection = facebookConnectionFactory.createConnection(accessGrant);
+		Facebook facebook = connection == null ? new FacebookTemplate(accessToken) : connection.getApi();
+		String [] fields = { "id", "email",  "first_name", "last_name" };
+		org.springframework.social.facebook.api.User facebookProfile = facebook.fetchObject("me", org.springframework.social.facebook.api.User.class, fields);
+		FacebookUser facebookUser = new FacebookUser(facebookProfile.getId(), facebookProfile.getEmail(), facebookProfile.getLastName()+facebookProfile.getFirstName());
+		SnsUser snsUser = new SnsUser(facebookUser);
+		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
+		if (dbSnsUser == null) {
+			User emailUser = userDao.findByEmail(facebookProfile.getEmail());
+			if(emailUser != null){
+				model.addAttribute("emailError", "이미 등록된 이메일 주소입니다.");
+				return "users/login";
+			}
+			String name = snsUser.getName();
+			User dbUser = userDao.findByName(name);
+			while(dbUser != null){
+				name += "(2)";
+				dbUser = userDao.findByName(name);
+			}
+			snsUser.setName(name);
+			int id = userDao.create(snsUser);
+			log.debug("id : {}", id);
+			snsUser.setId(id);
+			userDao.createSnsUser(snsUser);
+			dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
+		}
+		User user = userDao.findByIntId(dbSnsUser.getId());
+		session.setAttribute("user", user);
 		return "redirect:/";
 	}
 }

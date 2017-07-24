@@ -73,7 +73,6 @@
     								<h3 class="panel-title">작성자: ${listAnswer.writer}</h3>
     								<span><fmt:formatDate value="${listAnswer.createDate}" pattern="yyyy.MM.dd HH:mm:ss"/></span>
     								<span>
-    								<a href="#">수정</a> 
     								<a class="answer-delete" href="/answer/${listAnswer.id}">삭제</a>
     								</span>
  								</div>
