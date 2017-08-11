@@ -48,8 +48,8 @@ public class UserTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void updateWhenMisMatchUserId() throws Exception {
-		User user = new User("userId", "password", "name", "email@test.test", "ROLE_USER");
-		User updateUser = new User("user", "password", "name", "email@test.test", "ROLE_USER");
+		User user = new User(1,"userId", "password", "name", "email@test.test", "ROLE_USER");
+		User updateUser = new User(2,"user", "password", "name", "email@test.test", "ROLE_USER");
 		user.update(updateUser);
 	}
 	

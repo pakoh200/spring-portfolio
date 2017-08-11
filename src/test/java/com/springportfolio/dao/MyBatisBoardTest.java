@@ -30,14 +30,6 @@ public class MyBatisBoardTest {
 	}
 
 	@Test
-	public void gettingStarted() {
-		try (SqlSession session = sqlSessionFactory.openSession()) {
-			List<Board> list = session.selectList("BoardMapper.select");
-			log.debug("Boards : {}", list);
-		}
-	}
-
-	@Test
 	public void create() throws Exception {
 		try (SqlSession session = sqlSessionFactory.openSession()) {
 			Board board = new Board(22,"한글", "test", "가나다라", new java.util.Date(),0,0);
@@ -83,12 +75,5 @@ public class MyBatisBoardTest {
 		}
 	}
 
-	@Test
-	public void selectCount() throws Exception {
-		try (SqlSession session = sqlSessionFactory.openSession()) {
-			int total = session.selectOne("BoardMapper.selectCount");
-			log.debug("total : {}", total);
-		}
-	}
-
+	
 }

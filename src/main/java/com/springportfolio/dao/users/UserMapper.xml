@@ -24,7 +24,7 @@
 	</select>
 	
 	<insert id="create">
-		insert into USERS(userId, password, name, email) values(#{userId}, #{password}, #{name}, #{email})
+		insert into USERS(userId, password, name, email, authority) values(#{userId}, #{password}, #{name}, #{email}, #{authority})
 		<selectKey resultType="int" keyProperty="id" order="AFTER">
       SELECT LAST_INSERT_ID()
     </selectKey>

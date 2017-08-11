@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.springportfolio.domain.users.Sns;
 import com.springportfolio.domain.users.User;
@@ -52,8 +53,9 @@ public class UserDAOTest {
 	}
 	
 	@Test
+	@Transactional
 	public void create() throws Exception {
-		User user = new User("test2","test2","test2", "test2@test.test", "ROLE_USER");
+		User user = new User("test2222","test2","test2222", "test2222@test.test", "ROLE_USER");
 		int id = userDao.create(user);
 		log.debug("id : {}", id);
 		User actual = userDao.findById(user.getUserId());
@@ -68,6 +70,7 @@ public class UserDAOTest {
 	}
 	
 	@Test
+	@Transactional
 	public void delete() throws Exception {
 		userDao.delete(1);
 		assertNull(userDao.findByIntId(1));
@@ -81,21 +84,23 @@ public class UserDAOTest {
 	}
 	
 	@Test
+	@Transactional
 	public void createSnsUser() throws Exception {
-		NaverUser naverUser = new NaverUser("sns@test.test", "sns", "1234", "http://test.test", "20-30", "M", "12345", "테스트",	"9-10");
+		NaverUser naverUser = new NaverUser("sns2222@test.test", "sns", "1234", "http://test.test", "20-30", "M", "12345", "테스트2222",	"9-10");
 		SnsUser snsUser = new SnsUser(naverUser);
-		log.debug("id : {}", snsUser.getId());
 		int id = userDao.create(snsUser);
-		log.debug("id : {}", snsUser.getId());
+		log.debug("id : {}", id);
 		User user = userDao.findByIntId(id);
 		log.debug("user : {}", user);
 		snsUser.setId(id);
+		log.debug("snsUser : {}", snsUser);
 		userDao.createSnsUser(snsUser);
 		SnsUser dbSnsUser = userDao.findBySnsId(snsUser.getSnsId());
 		log.debug("dbSnsUser : {}", dbSnsUser);
 	}
 	
 	@Test
+	@Transactional
 	public void updateSnsUser() throws Exception {
 		User user = new User(2, null, null, "sns", "sns@test.test", "ROLE_USER");
 		userDao.create(user);
