@@ -69,6 +69,7 @@ $(function(){
 });
 
 function addSearch(e){
+	$(".panel-body").empty();
 	$(".panel-body").find("div").remove();
 	$("#search_pagination").find("li").remove();
 	
