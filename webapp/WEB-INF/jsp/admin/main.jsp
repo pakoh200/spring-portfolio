@@ -6,7 +6,11 @@
 <head>
 	<title>관리자 페이지</title>
     <%@ include file="../commons/header.jspf" %>
-
+	<script type="text/javascript">
+		$(function(){
+			$('#adMain').addClass('active');
+		});
+	</script>
 </head>
 
 <body>

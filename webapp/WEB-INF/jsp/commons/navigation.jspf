@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+</script>
  <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -38,15 +40,15 @@
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li>
+                <ul id="navi" class="nav navbar-nav side-nav">
+                    <li id="home" class="">
                         <a href="/"><i class="glyphicon glyphicon-home"></i> Main</a>
                     </li>
                     
-                    <li>
+                    <li id="board" class="">
                         <a href="/boards/view"><i class="glyphicon glyphicon-list-alt"></i> 게시판</a>
                     </li>
-                    <li>
+                    <li id="movie" class="">
                         <a href="/api/movie/view"><i class="glyphicon glyphicon-film"></i> 네이버 오픈 api 영화 검색</a>
                     </li>
                     <li>

@@ -13,6 +13,11 @@
 	<script src="/stylesheets/daumeditor/js/editor_loader.js?environment=development" type="text/javascript" charset="utf-8"></script>
 	<script src="/stylesheets/js/daumeditor.js?ver=2"></script>
     <%@ include file="../commons/header.jspf" %>
+    <script type="text/javascript">
+		$(function(){
+			$('#board').addClass('active');
+		});
+	</script>
 </head>
 
 <body>
@@ -73,6 +78,7 @@
     								<h3 class="panel-title">작성자: ${listAnswer.writer}</h3>
     								<span><fmt:formatDate value="${listAnswer.createDate}" pattern="yyyy.MM.dd HH:mm:ss"/></span>
     								<span>
+    								
     								<a class="answer-delete" href="/answer/${listAnswer.id}">삭제</a>
     								</span>
  								</div>

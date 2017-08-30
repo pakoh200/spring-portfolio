@@ -12,6 +12,11 @@
 	<script src="/stylesheets/daumeditor/js/editor_loader.js?environment=development" type="text/javascript" charset="utf-8"></script>
 	<script src="/stylesheets/js/daumeditor.js?ver=1"></script>
     <%@ include file="../commons/header.jspf" %>
+    <script type="text/javascript">
+		$(function(){
+			$('#board').addClass('active');
+		});
+	</script>
 
 </head>
 

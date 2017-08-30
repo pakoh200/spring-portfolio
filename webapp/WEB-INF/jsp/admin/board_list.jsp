@@ -7,7 +7,11 @@
 <head>
 	<title>게시판 관리</title>
     <%@ include file="../commons/header.jspf" %>
-
+	<script type="text/javascript">
+		$(function(){
+			$('#adBoard').addClass('active');
+		});
+	</script>
 </head>
 
 <body>

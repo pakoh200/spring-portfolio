@@ -8,7 +8,11 @@
 <head>
 	<title>게시판</title>
     <%@ include file="../commons/header.jspf" %>
-
+	<script type="text/javascript">
+		$(function(){
+			$('#board').addClass('active');
+		});
+	</script>
 </head>
 
 <body>

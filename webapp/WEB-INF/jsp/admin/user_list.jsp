@@ -6,7 +6,11 @@
 <head>
 	<title>회원관리</title>
     <%@ include file="../commons/header.jspf" %>
-
+	<script type="text/javascript">
+		$(function(){
+			$('#adUsers').addClass('active');
+		});
+	</script>
 </head>
 
 <body>

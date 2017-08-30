@@ -6,8 +6,16 @@
 <head>
 	<title>영화검색</title>
     <%@ include file="../commons/header.jspf" %>
+    <!--   
     <script type="text/javascript" src="/stylesheets/js/jquery.js"></script>
+    -->
     <script src="/stylesheets/js/scripts.js?ver=1"></script>
+    
+    <script type="text/javascript">
+		$(function(){
+			$('#movie').addClass('active');
+		});
+	</script>
 
 </head>
 

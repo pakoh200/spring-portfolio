@@ -6,7 +6,11 @@
 <head>
 
     <%@ include file="./commons/header.jspf" %>
-
+	<script type="text/javascript">
+		$(function(){
+			$('#home').addClass('active');
+		});
+	</script>
 </head>
 
 <body>
