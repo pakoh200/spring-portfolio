@@ -1,5 +1,6 @@
 package com.springportfolio.domain.users;
 
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -16,6 +17,8 @@ public class User {
 	private String password;
 
 	@NotEmpty
+	@Size(min = 4, max = 30)
+	@Pattern(regexp="^[가-힣a-zA-Z]+$", message="공백없이 한글, 영문만 가능합니다.")
 	private String name;
 
 	@Email
