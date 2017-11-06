@@ -10,7 +10,7 @@ public class User {
 	private int id;
 	@NotEmpty
 	@Size(min = 4, max = 12)
-	@Pattern(regexp="^[a-zA-Z]+$", message="특수문자 제외 공백없이 영문만 가능합니다.")
+	@Pattern(regexp="^[a-zA-Z0-9]+$", message="공백없이 영문, 숫자만 가능합니다.")
 	private String userId;
 
 	@NotEmpty
@@ -19,7 +19,7 @@ public class User {
 
 	@NotEmpty
 	@Size(min = 3, max = 30)
-	@Pattern(regexp="^[가-힣a-zA-Z]+$", message="공백없이 한글, 영문만 가능합니다.")
+	@Pattern(regexp="^[가-힣a-zA-Z0-9]+$", message="공백없이 한글, 영문만 가능합니다.")
 	private String name;
 
 	@Email
