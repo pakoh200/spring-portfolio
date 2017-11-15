@@ -19,7 +19,7 @@ public class User {
 
 	@NotEmpty
 	@Size(min = 3, max = 30)
-	@Pattern(regexp="^[가-힣a-zA-Z0-9]+$", message="공백없이 한글, 영문만 가능합니다.")
+	@Pattern(regexp="^[가-힣a-zA-Z0-9]+$", message="공백없이 한글, 영문, 숫자만 가능합니다.")
 	private String name;
 
 	@Email
