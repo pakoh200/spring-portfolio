@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,6 @@ import com.springportfolio.dao.answer.AnswerService;
 import com.springportfolio.dao.boards.BoardService;
 import com.springportfolio.domain.answer.Answer;
 import com.springportfolio.domain.boards.Board;
-import com.springportfolio.domain.users.Authenticate;
 import com.springportfolio.domain.users.User;
 
 @RestController
@@ -46,12 +44,12 @@ public class AnswerController {
 	public void delete(@PathVariable Integer id, HttpSession session){
 		Object temp = session.getAttribute("user");
 		if(temp==null){
-			throw new IllegalArgumentException("·Î±×ÀÎÇÏ¼¼¿ä.");
+			throw new IllegalArgumentException("ë¡œê·¸ì¸í•˜ì„¸ìš”.");
 		}
 		User user = (User)temp;
 		Answer answer = answerService.selectOne(id);
 		if(!user.matchName(answer.getWriter())){
-			throw new IllegalArgumentException("ÀÚ½ÅÀÇ ±Û¸¸ »èÁ¦ÇÒ ¼ö ÀÖ½À´Ï´Ù.");
+			throw new IllegalArgumentException("ìì‹ ì˜ ê¸€ë§Œ ì‚­ì œí•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 		}
 		Board board = boardService.selectOne(answer.getBoardId());
 		int countOfAnswer = board.getCountOfAnswer();

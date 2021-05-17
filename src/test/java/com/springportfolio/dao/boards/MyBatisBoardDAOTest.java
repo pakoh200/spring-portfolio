@@ -41,7 +41,7 @@ public class MyBatisBoardDAOTest {
 	
 	@Test
 	public void create() throws Exception {
-		Board board = new Board(2,"ÇÑ±Û", "test", "°¡³ª´Ù¶ó", new java.util.Date(), 0 ,0);
+		Board board = new Board(2,"ì œëª©", "test", "ë‚´ìš©", new java.util.Date(), 0 ,0);
 		log.debug("Board : {}", board);
 		boardDao.create(board);
 		
@@ -53,9 +53,9 @@ public class MyBatisBoardDAOTest {
 	
 	@Test
 	public void update() throws Exception {
-		Board board = new Board(12,"ÇÑ±Û", "test", "°¡³ª´Ù¶ó", new java.util.Date(), 0, 0);
+		Board board = new Board(12,"ì œëª©", "test", "ë‚´ìš©ï¿½", new java.util.Date(), 0, 0);
 		boardDao.create(board);
-		Board updateBoard = new Board(board.getNum(),"ÇÑ±Û", "test", "¸¶¹Ù»ç¾Æ", new java.util.Date() ,1, 0);
+		Board updateBoard = new Board(board.getNum(),"ì œëª©", "test", "ë‚´ìš©", new java.util.Date() ,1, 0);
 		log.debug("updateBoard : {}", updateBoard);
 		boardDao.updateBoard(updateBoard);
 		Board updatedBoard = boardDao.selectOne(board.getNum());
@@ -72,7 +72,7 @@ public class MyBatisBoardDAOTest {
 	@Test
 	public void updateCount() throws Exception {
 		int count = 0;
-		Board board = new Board(2,"ÇÑ±Û", "test", "°¡³ª´Ù¶ó", new java.util.Date(), count, 0);
+		Board board = new Board(2,"ì œëª©", "test", "ë‚´ìš©", new java.util.Date(), count, 0);
 		boardDao.create(board);
 		count += 1;
 		board.setCount(count);
@@ -83,7 +83,7 @@ public class MyBatisBoardDAOTest {
 	
 	@Test
 	public void updateCountOfAnswer() throws Exception {
-		Board board = new Board(5,"ÇÑ±Û", "test", "´ñ±Û Ä«¿îÆ® Áõ°¡", new java.util.Date(), 0, 0);
+		Board board = new Board(5,"ì œëª©", "test", "ë‚´ìš©", new java.util.Date(), 0, 0);
 		boardDao.create(board);
 		int countOfAnswer = board.getCountOfAnswer();
 		countOfAnswer += 1;

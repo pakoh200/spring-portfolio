@@ -37,8 +37,8 @@ public class ApiController {
 		int pageNUM = Integer.parseInt(pnum);
 		int start = (pageNUM-1)*10+1;
 		
-		String clientId = "id";// 애플리케이션 클라이언트 아이디값";
-		String clientSecret = "secret";// 애플리케이션 클라이언트 시크릿값";
+		String clientId = "id";
+		String clientSecret = "secret";
 		try {
 			String text = URLEncoder.encode(title, "UTF-8");
 			String apiURL = "https://openapi.naver.com/v1/search/movie?query=" + text + "&start=" + start; // json
@@ -49,9 +49,9 @@ public class ApiController {
 			con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
 			int responseCode = con.getResponseCode();
 			BufferedReader br;
-			if (responseCode == 200) { // 정상 호출
+			if (responseCode == 200) { 
 				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			} else { // 에러 발생
+			} else { // 占쏙옙占쏙옙 占쌩삼옙
 				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
 			}
 			String inputLine;

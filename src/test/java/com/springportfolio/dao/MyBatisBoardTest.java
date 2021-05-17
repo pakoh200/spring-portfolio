@@ -32,7 +32,7 @@ public class MyBatisBoardTest {
 	@Test
 	public void create() throws Exception {
 		try (SqlSession session = sqlSessionFactory.openSession()) {
-			Board board = new Board(22,"ÇÑ±Û", "test", "°¡³ª´Ù¶ó", new java.util.Date(),0,0);
+			Board board = new Board(22,"ì œëª©", "test", "ë‚´ìš©", new java.util.Date(),0,0);
 			session.insert("BoardMapper.createBoard", board);
 			Board actual = session.selectOne("BoardMapper.selectOne", board.getNum());
 			log.debug("actual : {}", actual);
@@ -43,9 +43,9 @@ public class MyBatisBoardTest {
 	@Test
 	public void update() throws Exception {
 		try (SqlSession session = sqlSessionFactory.openSession()) {
-			Board board = new Board(23,"ÇÑ±Û", "test", "hahahahah", new java.util.Date(),0,0);
+			Board board = new Board(23,"ì œëª©", "test", "hahahahah", new java.util.Date(),0,0);
 			session.insert("BoardMapper.createBoard", board);
-			Board updateBoard = new Board(board.getNum(),"ÇÑ±Û2", "test", "hahahahah", new java.util.Date(),0,0);
+			Board updateBoard = new Board(board.getNum(),"ì œëª©", "test", "hahahahah", new java.util.Date(),0,0);
 			log.debug("updateBoard : {}", updateBoard);
 			session.update("BoardMapper.updateBoard", updateBoard);
 			Board updatedBoard = session.selectOne("BoardMapper.selectOne", board.getNum());

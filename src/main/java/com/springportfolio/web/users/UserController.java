@@ -83,12 +83,12 @@ public class UserController {
 		}
 		User emailUser = userDao.findByEmail(user.getEmail());
 		if(emailUser != null){
-			model.addAttribute("emailError", "ÀÌ¹Ì µî·ÏµÈ ÀÌ¸ŞÀÏ ÁÖ¼ÒÀÔ´Ï´Ù.");
+			model.addAttribute("emailError", "ì´ë¯¸ ë“±ë¡ëœ ì´ë©”ì¼ ì£¼ì†Œì…ë‹ˆë‹¤.");
 			return "users/login";
 		}
 		User dbUser = userDao.findById(user.getUserId());
 		if (dbUser != null) {
-			model.addAttribute("errorMessage", "Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
+			model.addAttribute("errorMessage", "ì¡´ì¬í•˜ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
 			return "users/form";
 		}
 		if (user.getUserId().equals("admin")) {
@@ -103,7 +103,7 @@ public class UserController {
 	public String updateForm(@PathVariable Integer id, Model model) {
 		log.debug("id : {}", id);
 		if (id == null) {
-			throw new IllegalArgumentException("»ç¿ëÀÚ ¾ÆÀÌµğ°¡ ÇÊ¿äÇÕ´Ï´Ù.");
+			throw new IllegalArgumentException("ì‚¬ìš©ì ì•„ì´ë””ê°€ í•„ìš”í•©ë‹ˆë‹¤.");
 		}
 		User user = userDao.findByIntId(id);
 		log.debug("User : {}", user);
@@ -184,11 +184,11 @@ public class UserController {
 		}
 		User user = userDao.findById(authenticate.getUserId());
 		if (user == null) {
-			model.addAttribute("errorMessage", "Á¸ÀçÇÏÁö ¾Ê´Â »ç¿ëÀÚÀÔ´Ï´Ù.");
+			model.addAttribute("errorMessage", "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì‚¬ìš©ìì…ë‹ˆë‹¤.");
 			return "users/login";
 		}
 		if (!user.matchPassword(authenticate)) {
-			model.addAttribute("errorMessage", "ºñ¹Ğ¹øÈ£°¡ Æ²¸³´Ï´Ù.");
+			model.addAttribute("errorMessage", "ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë¦½ë‹ˆë‹¤.");
 			return "users/login";
 		}
 		log.debug("User : {}", user);
@@ -206,7 +206,7 @@ public class UserController {
 	@RequestMapping("{id}/delete")
 	public String delete(@PathVariable Integer id, HttpSession session) {
 		if (id == null) {
-			throw new IllegalArgumentException("»ç¿ëÀÚ ¾ÆÀÌµğ°¡ ÇÊ¿äÇÕ´Ï´Ù.");
+			throw new IllegalArgumentException("ì‚¬ìš©ì ì•„ì´ë””ê°€ í•„ìš”í•©ë‹ˆë‹¤.");
 		}
 		Object temp = session.getAttribute("user");
 		User sessionedUser = (User) temp;
@@ -228,9 +228,9 @@ public class UserController {
 		String clientId = "";
 		String requestUrl = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + clientId + "&redirect_uri=" + mydomain
 				+ "&state=";
-		String state = Utils.generateState(); // ÅäÅ«À» »ı¼ºÇÕ´Ï´Ù.
-		session.setAttribute("state", state); // ¼¼¼Ç¿¡ ÅäÅ«À» ÀúÀåÇÕ´Ï´Ù.
-		return "redirect:" + requestUrl + state; // ¸¸µé¾îÁø URL·Î ÀÎÁõÀ» ¿äÃ»ÇÕ´Ï´Ù.
+		String state = Utils.generateState(); // í† í°ì„ ìƒì„±í•©ë‹ˆë‹¤.
+		session.setAttribute("state", state); // ì„¸ì…˜ì— í† í°ì„ ì €ì¥í•©ë‹ˆë‹¤.
+		return "redirect:" + requestUrl + state; // ë§Œë“¤ì–´ì§„ URLë¡œ ì¸ì¦ì„ ìš”ì²­í•©ë‹ˆë‹¤.
 	}
 
 	@RequestMapping("/callback")
@@ -268,7 +268,7 @@ public class UserController {
 		if (dbSnsUser == null) {
 			User emailUser = userDao.findByEmail(naverUser.getEmail());
 			if(emailUser != null){
-				model.addAttribute("emailError", "ÀÌ¹Ì µî·ÏµÈ ÀÌ¸ŞÀÏ ÁÖ¼ÒÀÔ´Ï´Ù.");
+				model.addAttribute("emailError", "ì´ë¯¸ ë“±ë¡ëœ ì´ë©”ì¼ ì£¼ì†Œì…ë‹ˆë‹¤.");
 				return "users/login";
 			}
 			String name = snsUser.getName();
@@ -318,7 +318,7 @@ public class UserController {
 		if (dbSnsUser == null) {
 			User emailUser = userDao.findByEmail(person.getAccountEmail());
 			if(emailUser != null){
-				model.addAttribute("emailError", "ÀÌ¹Ì µî·ÏµÈ ÀÌ¸ŞÀÏ ÁÖ¼ÒÀÔ´Ï´Ù.");
+				model.addAttribute("emailError", "ì´ë¯¸ ë“±ë¡ëœ ì´ë©”ì¼ ì£¼ì†Œì…ë‹ˆë‹¤.");
 				return "users/login";
 			}
 			String name = snsUser.getName();
@@ -368,7 +368,7 @@ public class UserController {
 		if (dbSnsUser == null) {
 			User emailUser = userDao.findByEmail(facebookProfile.getEmail());
 			if(emailUser != null){
-				model.addAttribute("emailError", "ÀÌ¹Ì µî·ÏµÈ ÀÌ¸ŞÀÏ ÁÖ¼ÒÀÔ´Ï´Ù.");
+				model.addAttribute("emailError", "ì´ë¯¸ ë“±ë¡ëœ ì´ë©”ì¼ ì£¼ì†Œì…ë‹ˆë‹¤.");
 				return "users/login";
 			}
 			String name = snsUser.getName();
